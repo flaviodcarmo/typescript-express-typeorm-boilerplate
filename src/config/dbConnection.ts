@@ -4,6 +4,13 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+import ApiRequestHistory from "../entities/ApiRequestHistory";
+import Confirmation from "../entities/Confirmation";
+import ConfirmationType from "../entities/ConfirmationType";
+import Password from "../entities/Password";
+import Profile from "../entities/Profile";
+import User from "../entities/User";
+
 export const dbConnection = new DataSource({
     type: settings.DATABASE.TYPE,
     host: settings.DATABASE.HOST,
@@ -12,7 +19,12 @@ export const dbConnection = new DataSource({
     password: settings.DATABASE.PASSWORD,
     database: settings.DATABASE.NAME,
     entities: [
-        "src/entities/**/*.ts"
+        ApiRequestHistory,
+        Confirmation,
+        ConfirmationType,
+        Password,
+        Profile,
+        User,
     ],
     logging: false,
     synchronize: false
