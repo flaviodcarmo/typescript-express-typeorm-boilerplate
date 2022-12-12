@@ -1,6 +1,6 @@
 import Result from "../util/Result";
 import * as nodemailer from "nodemailer";
-import { settings } from "../config/Settings";
+import { settings } from "../config/settings";
 import e from "cors";
 
 class MailUtil {

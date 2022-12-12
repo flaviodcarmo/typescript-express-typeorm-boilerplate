@@ -8,7 +8,7 @@ import Password from "../entities/Password";
 import PasswordBO from "./PasswordBO";
 import ConfirmationBO from "./ConfirmationBO";
 import jwt, { Secret, JwtPayload } from 'jsonwebtoken';
-import { settings } from "../config/Settings";
+import { settings } from "../config/settings";
 import { constants } from "../util/Constants";
 import AppUtil from "../util/AppUtil";
 import Filter from "../util/Filter";
