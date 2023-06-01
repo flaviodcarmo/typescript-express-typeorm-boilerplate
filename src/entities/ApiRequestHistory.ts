@@ -3,10 +3,10 @@ import "reflect-metadata"
 
 @Entity('apiRequestHistory')
 class ApiRequestHistory extends BaseEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column()
+    @Column({ default: null })
     userId: string;
 
     @Column()
@@ -15,7 +15,7 @@ class ApiRequestHistory extends BaseEntity {
     @Column()
     sourceApp: string;
 
-    @Column()
+    @Column({ type: "varchar", length: 300, nullable: true })
     userToken: string;
 
     @Column()

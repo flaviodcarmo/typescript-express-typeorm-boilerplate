@@ -4,7 +4,7 @@ import "reflect-metadata"
 
 @Entity('users')
 class User extends BaseProperty {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn("uuid")
     id: string;
 
     @Column()
@@ -21,10 +21,10 @@ class User extends BaseProperty {
 
     profileName: string;
 
-    @Column({ type: "boolean", select: false })
+    @Column({ type: "boolean", select: false, default: false })
     isSentMail: number;
 
-    @Column({ type: "boolean" })
+    @Column({ type: "boolean", default: false })
     isConfirmed: number;
 
     super(entity : any = {}) {

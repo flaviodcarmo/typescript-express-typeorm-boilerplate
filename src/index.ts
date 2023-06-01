@@ -18,7 +18,7 @@ async function initialize() {
             new UserService().sendMailToConfirmation();
         }, 20000);
     } catch (error) {
-        
+        console.error(error)
     }
 }
 

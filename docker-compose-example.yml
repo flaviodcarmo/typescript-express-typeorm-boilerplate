@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  database:
+    container_name: typescript-database
+    image: mysql:8
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 3312:3306
+    volumes:
+      - ~/apps/mysql/typescript-express-typeorm-jest-boilerplate:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=@rootPassword
+      - MYSQL_DATABASE=@databaseName
+      - MYSQL_USER=@user
+      - MYSQL_PASSWORD=@password
+  app:
+    depends_on:
+      - database
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: typescript-web-api
+    image: typescript-web-api
+    restart: always
+    ports:
+      - 3456:3456
+    environment:
+      - PORT=3456
+      - SECRET_KEY=@SECRET_KEY
+      - TYPE=mysql
+      - HOST=database
+      - DATABASE_PORT=3306
+      - USERNAME=@user
+      - PASSWORD=@password
+      - DATABASE=@databaseName
+    stdin_open: true
+    tty: true

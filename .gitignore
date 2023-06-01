@@ -103,8 +103,5 @@ dist
 # TernJS port file
 .tern-port
 
-# settings file
-src/config/settings.ts
-
 # docker compose file
 docker-compose.yml

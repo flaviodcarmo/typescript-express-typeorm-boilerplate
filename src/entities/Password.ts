@@ -4,7 +4,7 @@ import BaseProperty from "./BaseProperty";
 
 @Entity('passwords')
 class Password extends BaseProperty {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn("uuid")
     id: string;
 
     @Column()

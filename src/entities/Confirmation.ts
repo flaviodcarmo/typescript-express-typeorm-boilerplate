@@ -4,7 +4,7 @@ import BaseProperty from "./BaseProperty";
 
 @Entity('confirmation')
 class Confirmation extends BaseProperty {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn("uuid")
     id: string;
 
     @Column()

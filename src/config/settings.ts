@@ -4,15 +4,15 @@ dotenv.config();
 
 export const settings : any = 
 {
-    PORT: 3456,
-    SECRET_KEY: '',
+    PORT: process.env["PORT"],
+    SECRET_KEY: process.env["SECRET_KEY"],
     DATABASE: {
-        TYPE: '',
-        HOST: '',
-        PORT: 3312,
-        USERNAME: '',
-        PASSWORD: '',
-        NAME: ''
+        TYPE: process.env["TYPE"],
+        HOST: process.env["HOST"],
+        PORT: process.env["DATABASE_PORT"],
+        USERNAME: process.env["USERNAME"],
+        PASSWORD: process.env["PASSWORD"],
+        NAME: process.env["DATABASE"]
     },
     MAIL: {
         FROM: '',
