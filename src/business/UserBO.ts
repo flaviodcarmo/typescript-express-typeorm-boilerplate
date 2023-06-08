@@ -71,10 +71,10 @@ class UserBO {
             password = await password.save();
 
             user = (await this.getByParameters({ id: user.id }))[0];
-            return new Result().returnSuccess(user);
+            return Result.returnSuccess(user);
         } catch(e) {
             console.error(e);
-            return new Result().returnError('Ocorreu um erro ao cadastrar um usuário.');
+            return Result.returnError('Ocorreu um erro ao cadastrar um usuário.');
         }
     }
 
@@ -119,12 +119,12 @@ class UserBO {
             }
 
             if(errors.length > 0) {
-                return new Result().returnErrors(errors, 422);
+                return Result.returnErrors(errors, 422);
             }
 
-            return new Result().returnSuccess(entity);
+            return Result.returnSuccess(entity);
         } catch(e) {
-            return new Result().returnError(e.message);
+            return Result.returnError(e.message);
         }
     }
 
@@ -174,7 +174,7 @@ class UserBO {
             return r;
         } catch(e) {
             console.error(e);
-            return this.result.returnError('Ocorreu um erro ao logar no sistema.');
+            return Result.returnError('Ocorreu um erro ao logar no sistema.');
         }
     }
 
@@ -193,31 +193,30 @@ class UserBO {
             }
 
             if(errors.length > 0) {
-                return new Result().returnErrors(errors, 422);
+                return Result.returnErrors(errors, 422);
             }
 
             user = (await this.searchAll({ email: entity.email }))[0];
             if(user === undefined) {
-                return new Result().returnError('O email ou a senha é inválida.', 401);
+                return Result.returnError('O email ou a senha é inválida.', 401);
             }
 
             password = (await this.passwordBo.searchAll({ userId: user.id }))[0];
             if(password === undefined) {
-                return new Result().returnError('O email ou a senha é inválida.', 401);
+                return Result.returnError('O email ou a senha é inválida.', 401);
             }
 
             if(bcrypt.compareSync(entity.password, password.hash) === false) {
-                return new Result().returnError('O email ou a senha é inválida.', 401);
+                return Result.returnError('O email ou a senha é inválida.', 401);
             }
 
             if(user.isConfirmed === 0) {
-                return new Result().returnError('É necessário confirmar a conta com o código recebido.', 401);
+                return Result.returnError('É necessário confirmar a conta com o código recebido.', 401);
             }
 
-            return new Result().returnSuccess(user);
+            return Result.returnSuccess(user);
         } catch(e) {
-            console.error(e);
-            return new Result().returnError('Ocorreu um erro ao logar no sistema.');
+            return Result.returnError('Ocorreu um erro ao logar no sistema.');
         }
     }
 
@@ -238,10 +237,10 @@ class UserBO {
 
             user = await user.save();
 
-            return new Result().returnSuccess(['O email foi confirmado com sucesso!']);
+            return Result.returnSuccess(['O email foi confirmado com sucesso!']);
         } catch(e) {
             console.error(e);
-            return new Result().returnError(e.message, 500);
+            return Result.returnError(e.message, 500);
         }
     }
 
@@ -266,14 +265,14 @@ class UserBO {
             }
 
             if(errors.length > 0) {
-                return new Result().returnErrors(errors, 422);
+                return Result.returnErrors(errors, 422);
             }
 
             user = (await this.searchAll({ id: entity.userId }))[0];
             if(user === undefined) {
-                return new Result().returnError('O usuário informado é inválido!', 422);
+                return Result.returnError('O usuário informado é inválido!', 422);
             } else if(user.isConfirmed) {
-                return new Result().returnError('O usuário informado já está validado!', 422);
+                return Result.returnError('O usuário informado já está validado!', 422);
             }
 
             confirmation = (await new ConfirmationBO(user).searchAll({ 
@@ -283,13 +282,13 @@ class UserBO {
                 typeId: constants.confirmationType.USER_REGISTRATION_SIGN_IN_ID
             }))[0];
             if(confirmation === undefined) {
-                return new Result().returnError('O usuário e/ou código de confirmação são inválidos!', 422);
+                return Result.returnError('O usuário e/ou código de confirmação são inválidos!', 422);
             }
 
-            return new Result().returnSuccess(user);
+            return Result.returnSuccess(user);
         } catch(e) {
             console.error(e);
-            return new Result().returnError('Ocorreu um erro ao validar a confirmação de email.', 500);
+            return Result.returnError('Ocorreu um erro ao validar a confirmação de email.', 500);
         }
     }
 }

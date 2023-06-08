@@ -62,7 +62,7 @@ class BaseController<BO> {
             } catch {}
 
             try {
-                body = this.req.body;
+                body = Object.assign({}, this.req.body);
                 if(body && body.password && typeof body.password === 'string'){
                     body.password = "******";
                 }
@@ -72,7 +72,9 @@ class BaseController<BO> {
                 }
 
                 aph.body = JSON.stringify(body) || null;
-            } catch {}
+            } catch (e) {
+                console.error(e.message)
+            }
 
             try {
                 aph.ip = this.req.socket.remoteAddress || null;

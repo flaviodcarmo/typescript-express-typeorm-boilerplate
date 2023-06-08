@@ -1,7 +1,6 @@
 import Result from "../util/Result";
 import * as nodemailer from "nodemailer";
 import { settings } from "../config/settings";
-import e from "cors";
 
 class MailUtil {
     r : Result;
@@ -36,14 +35,11 @@ class MailUtil {
             });
 
             console.info('O email foi enviado com sucesso!');
-            this.r.returnSuccess('O email foi enviado com sucesso!');
 
-            return this.r;
+            return Result.returnSuccess('O email foi enviado com sucesso!');
         } catch(e) {
             console.error(e);
-
-            this.r.returnError(e.message);
-            return this.r;
+            return Result.returnError(e.message);
         }
     }
 
@@ -64,13 +60,12 @@ class MailUtil {
             }
 
             if(errors.length > 0) {
-                this.r.returnErrors(errors);
+                return Result.returnErrors(errors);
             }
 
-            return this.r;
+            return Result.returnSuccess();
         } catch(e) {
-            this.r.returnError(e.message);
-            return this.r;
+            return Result.returnError(e.message);
         }
     }
 }

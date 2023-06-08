@@ -108,9 +108,9 @@ class DefaultService {
                 confirmationType = await confirmationType.save();
             }
 
-            return new Result().returnSuccess();
+            return Result.returnSuccess();
         } catch(e) {
-            return new Result().returnError(e.message);
+            return Result.returnError(e.message);
         }
     }
 }

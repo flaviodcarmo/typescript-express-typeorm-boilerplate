@@ -52,10 +52,10 @@ class ProfileBO {
 
             profile = await profile.save();
 
-            return new Result().returnSuccess(profile);
+            return Result.returnSuccess(profile);
         } catch (e) {
             console.error(e);
-            return new Result().returnError('Ocorreu um erro ao salvar o perfil.');
+            return Result.returnError('Ocorreu um erro ao salvar o perfil.');
         }
     }
 
@@ -80,13 +80,13 @@ class ProfileBO {
             }
 
             if(errors.length > 0) {
-                return new Result().returnErrors(errors, 422);
+                return Result.returnErrors(errors, 422);
             }
 
-            return new Result().returnSuccess(profile);
+            return Result.returnSuccess(profile);
         } catch (e) {
             console.error(e);
-            return new Result().returnError('Ocorreu um erro ao validar o perfil');
+            return Result.returnError('Ocorreu um erro ao validar o perfil');
         }
     }
 
@@ -106,10 +106,10 @@ class ProfileBO {
 
             profile = await profile.save();
 
-            return new Result().returnSuccess({});
+            return Result.returnSuccess({});
         } catch(e) {
             console.error(e);
-            return new Result().returnError('Ocorreu um erro ao deletar o perfil.', 500);
+            return Result.returnError('Ocorreu um erro ao deletar o perfil.', 500);
         }
     }
 
@@ -128,15 +128,15 @@ class ProfileBO {
             }
 
             if(errors.length > 0) {
-                return new Result().returnErrors(errors, 422);
+                return Result.returnErrors(errors, 422);
             }
 
             profile = currentProfile;
 
-            return new Result().returnSuccess(profile);
+            return Result.returnSuccess(profile);
         } catch(e) {
             console.error(e);
-            return new Result().returnError('Ocorreu um erro na validação de deletar o perfil.');
+            return Result.returnError('Ocorreu um erro na validação de deletar o perfil.');
         }
     }
 }

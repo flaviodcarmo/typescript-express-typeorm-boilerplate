@@ -51,10 +51,10 @@ class ConfirmationTypeBO {
 
             confirmationType = await confirmationType.save();
 
-            return new Result().returnSuccess(confirmationType);
+            return Result.returnSuccess(confirmationType);
         } catch(e) {
             console.error(e);
-            return new Result().returnError('Ocorreu um erro ao salvar o tipo de confirmação.', 500);
+            return Result.returnError('Ocorreu um erro ao salvar o tipo de confirmação.', 500);
         }
     }
 
@@ -80,13 +80,13 @@ class ConfirmationTypeBO {
             }
 
             if(errors.length > 0) {
-                return new Result().returnErrors(errors, 422);
+                return Result.returnErrors(errors, 422);
             }
 
-            return new Result().returnSuccess(confirmationType);
+            return Result.returnSuccess(confirmationType);
         } catch(e) {
             console.error(e);
-            return new Result().returnError('Ocorreu um erro na validação de salvar o tipo de confirmação.');
+            return Result.returnError('Ocorreu um erro na validação de salvar o tipo de confirmação.');
         }
     }
 
@@ -107,10 +107,10 @@ class ConfirmationTypeBO {
 
             confirmationType = await confirmationType.save();
 
-            return new Result().returnSuccess({});
+            return Result.returnSuccess({});
         } catch(e) {
             console.error(e);
-            return new Result().returnError('Ocorreu um erro ao deletar o tipo de confirmação.', 500);
+            return Result.returnError('Ocorreu um erro ao deletar o tipo de confirmação.', 500);
         }
     }
 
@@ -129,15 +129,15 @@ class ConfirmationTypeBO {
             }
 
             if(errors.length > 0) {
-                return new Result().returnErrors(errors, 422);
+                return Result.returnErrors(errors, 422);
             }
 
             confirmationType = currentCT;
 
-            return new Result().returnSuccess(confirmationType);
+            return Result.returnSuccess(confirmationType);
         } catch(e) {
             console.error(e);
-            return new Result().returnError('Ocorreu um erro na validação de deletar o tipo de confirmação.');
+            return Result.returnError('Ocorreu um erro na validação de deletar o tipo de confirmação.');
         }
     }
 }

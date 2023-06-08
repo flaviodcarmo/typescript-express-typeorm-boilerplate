@@ -63,7 +63,7 @@ class UserService {
             return r;
         } catch(e) {
             console.error(e);
-            return new Result().returnError(e.message);
+            return Result.returnError(e.message);
         }
     }
 }
