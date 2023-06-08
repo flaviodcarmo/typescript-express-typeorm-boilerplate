@@ -16,10 +16,8 @@ class User extends BaseProperty {
     @Column({ type: "date" })
     birthDay: string;
     
-    @Column()
+    @Column({ nullable: true })
     profileId: string;
-
-    profileName: string;
 
     @Column({ type: "boolean", select: false, default: false })
     isSentMail: number;

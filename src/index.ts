@@ -3,8 +3,12 @@ import app  from './app';
 import { settings }  from './config/settings';
 
 import UserService from "./services/UserService";
+import DefaultService from "./services/DefaultService";
+import Result from "./util/Result";
 
 async function initialize() {
+    let r : Result = new Result();
+
     try {
         await dbConnection.initialize();
 
@@ -14,9 +18,11 @@ async function initialize() {
             console.log(`⚡️[server]: Server is running at https://localhost:${settings.PORT}`);
         });
 
-        setInterval(function() {
-            new UserService().sendMailToConfirmation();
+        setInterval(async function() {
+            await new UserService().sendMailToConfirmation();
         }, 20000);
+
+        new DefaultService().createDefaultData();
     } catch (error) {
         console.error(error)
     }

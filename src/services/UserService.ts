@@ -20,7 +20,7 @@ class UserService {
 
         let user : User = new User();
         user.id = constants.userAdministrator.ID;
-        user.profileId = constants.userAdministrator.PROFILE;
+        user.profileId = constants.profile.ADMINISTRATOR_ID;
         this.currentUser = user;
 
         this.bo = new UserBO(user);
@@ -44,7 +44,7 @@ class UserService {
                 confirmation.id                 = await this.appUtil.getNewId();
                 confirmation.userId             = user.id;
                 confirmation.code               = await this.appUtil.generateConfirmationCode();
-                confirmation.typeId             = constants.confirmationType.USER_REGISTRATION_ID;
+                confirmation.typeId             = constants.confirmationType.USER_REGISTRATION_SIGN_IN_ID;
                 confirmation.createdByUserId    = this.currentUser.id;
                 confirmation.createdDate        = new Date();
                 

@@ -22,6 +22,8 @@ class Result {
         r.errorMessage      = error;
         r.errors            = [error];
         r.httpCode          = httpCode != null ? httpCode : r.httpCode;
+
+        console.error(error);
         return r;
     }
 

@@ -280,7 +280,7 @@ class UserBO {
                 userId: user.id, 
                 code: entity.code, 
                 validateLimiteValidation: true,
-                typeId: constants.confirmationType.USER_REGISTRATION_ID
+                typeId: constants.confirmationType.USER_REGISTRATION_SIGN_IN_ID
             }))[0];
             if(confirmation === undefined) {
                 return new Result().returnError('O usuário e/ou código de confirmação são inválidos!', 422);
