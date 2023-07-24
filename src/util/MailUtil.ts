@@ -20,7 +20,9 @@ class MailUtil {
             }
 
             transporter = nodemailer.createTransport({
-                service: 'hotmail',
+                host: settings.MAIL.HOST,
+                port: settings.MAIL.PORT,
+                secure: true,
                 auth: {
                     user: settings.MAIL.USER,
                     pass: settings.MAIL.PASSWORD
@@ -28,9 +30,9 @@ class MailUtil {
             });
 
             info = await transporter.sendMail({
-                from: settings.MAIL.FROM, // sender address
-                to: to, // list of receivers
-                subject: subject, // Subject line
+                from: settings.MAIL.FROM,
+                to: to,
+                subject: subject,
                 text: message
             });
 

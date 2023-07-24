@@ -14,9 +14,11 @@ export const settings : any =
         NAME: process.env["DATABASE"]
     },
     MAIL: {
-        FROM: '',
-        USER: '',
-        PASSWORD: ''
+        HOST: process.env["MAIL_HOST"],
+        PORT: process.env["MAIL_PORT"],
+        FROM: process.env["MAIL_FROM"],
+        USER: process.env["MAIL_USER"],
+        PASSWORD: process.env["MAIL_PASSWORD"]
     },
     TESTS: {
         PORT: 3313,
