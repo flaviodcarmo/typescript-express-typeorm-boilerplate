@@ -35,7 +35,7 @@ class UserBO {
     }
 
     async getByParameters(filters: Filter = {}) : Promise<Array<User>> {
-        if(this.currentUser.profileId !== constants.profile.ADMINISTRATOR_ID){
+        if (this.currentUser.profileId !== constants.profile.ADMINISTRATOR_ID){
             filters.id = this.currentUser.id;
         }
 
@@ -210,7 +210,7 @@ class UserBO {
                 return Result.returnError('O email ou a senha é inválida.', 401);
             }
 
-            if(user.isConfirmed === 0) {
+            if(user.isConfirmed === false) {
                 return Result.returnError('É necessário confirmar a conta com o código recebido.', 401);
             }
 
@@ -233,7 +233,7 @@ class UserBO {
 
             user.updatedDate = new Date();
             user.updatedByUserId = user.id;
-            user.isConfirmed = 1;
+            user.isConfirmed = true;
 
             user = await user.save();
 

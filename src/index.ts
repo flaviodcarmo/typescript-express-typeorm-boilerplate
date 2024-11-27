@@ -19,10 +19,10 @@ async function initialize() {
         });
 
         setInterval(async function() {
-            //await new UserService().sendMailToConfirmation();
+            await new UserService().sendMailToConfirmation();
         }, 20000);
 
-        //new DefaultService().createDefaultData();
+        new DefaultService().createDefaultData();
     } catch (error) {
         console.error(error)
     }

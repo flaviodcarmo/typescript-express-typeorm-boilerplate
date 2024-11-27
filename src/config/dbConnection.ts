@@ -26,6 +26,6 @@ export const dbConnection = new DataSource({
         Profile,
         User,
     ],
-    logging: false,
+    logging: true,
     synchronize: true
 });

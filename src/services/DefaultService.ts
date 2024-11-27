@@ -52,8 +52,8 @@ class DefaultService {
                 admUser.email = constants.userAdministrator.EMAIL;
                 admUser.birthDay = moment().format("YYYY-MM-DD");
                 admUser.profileId = null;
-                admUser.isConfirmed = 1;
-                admUser.isSentMail = 1;
+                admUser.isConfirmed = true;
+                admUser.isSentMail = true;
 
                 admUser.createdByUserId = admUser.id;
 

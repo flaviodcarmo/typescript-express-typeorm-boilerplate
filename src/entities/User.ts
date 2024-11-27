@@ -20,10 +20,10 @@ class User extends BaseProperty {
     profileId?: string | null;
 
     @Column({ type: "boolean", select: false, default: false })
-    isSentMail: number;
+    isSentMail: boolean;
 
     @Column({ type: "boolean", default: false })
-    isConfirmed: number;
+    isConfirmed: boolean;
 
     super(entity : any = {}) {
         this.name               = entity.name ? entity.name : this.name;
