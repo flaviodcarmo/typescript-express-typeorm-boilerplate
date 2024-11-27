@@ -110,7 +110,7 @@ class DefaultService {
 
             return Result.returnSuccess();
         } catch(e) {
-            return Result.returnError(e.message);
+            return Result.returnError((e as Error).message);
         }
     }
 }

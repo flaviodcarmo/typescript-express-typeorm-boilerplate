@@ -3,7 +3,7 @@ dotenv.config();
 
 export const settings : any = 
 {
-    PORT: process.env["PORT"],
+    PORT: process.env["PORT"] || 3000,
     SECRET_KEY: process.env["SECRET_KEY"],
     DATABASE: {
         TYPE: process.env["TYPE"],

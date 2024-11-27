@@ -7,7 +7,7 @@ class Profile extends BaseProperty {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column()
+    @Column({ type: "varchar" })
     name: string;
 }
 

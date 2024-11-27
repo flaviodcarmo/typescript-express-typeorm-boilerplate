@@ -7,17 +7,17 @@ class User extends BaseProperty {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column()
+    @Column({ type: "varchar" })
     name: string;
 
-    @Column()
+    @Column({ type: "varchar" })
     email: string;
 
     @Column({ type: "date" })
     birthDay: string;
     
-    @Column({ nullable: true })
-    profileId: string;
+    @Column({ type: "varchar", nullable: true })
+    profileId?: string | null;
 
     @Column({ type: "boolean", select: false, default: false })
     isSentMail: number;

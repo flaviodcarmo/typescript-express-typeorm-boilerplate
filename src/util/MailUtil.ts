@@ -41,7 +41,7 @@ class MailUtil {
             return Result.returnSuccess('O email foi enviado com sucesso!');
         } catch(e) {
             console.error(e);
-            return Result.returnError(e.message);
+            return Result.returnError((e as Error).message);
         }
     }
 
@@ -67,7 +67,7 @@ class MailUtil {
 
             return Result.returnSuccess();
         } catch(e) {
-            return Result.returnError(e.message);
+            return Result.returnError((e as Error).message);
         }
     }
 }

@@ -78,7 +78,7 @@ class UserBO {
         }
     }
 
-    async validateSave(entity : Filter = null) : Promise<Result> {
+    async validateSave(entity : Filter = {}) : Promise<Result> {
         try {
             let errors : Array<string> = [];
             let user : User | undefined;
@@ -124,7 +124,7 @@ class UserBO {
 
             return Result.returnSuccess(entity);
         } catch(e) {
-            return Result.returnError(e.message);
+            return Result.returnError((e as Error).message);
         }
     }
 
@@ -240,7 +240,7 @@ class UserBO {
             return Result.returnSuccess(['O email foi confirmado com sucesso!']);
         } catch(e) {
             console.error(e);
-            return Result.returnError(e.message, 500);
+            return Result.returnError((e as Error).message, 500);
         }
     }
 
