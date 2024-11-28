@@ -30,12 +30,8 @@ export const auth =
                 userId: decoded.userId, 
                 profileId: decoded.profileId 
             };
-            /*
-            req['currentUser'] = { 
-                userId: decoded.userId, 
-                profileId: decoded.profileId 
-            };
-            */
+
+            req = customReq;
 
             if(
                 decoded.userId && 
@@ -77,12 +73,7 @@ export const auth =
                 profileId: decoded.profileId 
             };
 
-            /*
-            req['currentUser'] = { 
-                userId: decoded.userId, 
-                profileId: decoded.profileId 
-            };
-            */
+            req = customReq;
 
             if(
                 decoded.userId && 

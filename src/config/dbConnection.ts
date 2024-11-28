@@ -12,12 +12,12 @@ import Profile from "../entities/Profile";
 import User from "../entities/User";
 
 export const dbConnection = new DataSource({
-    type: settings.DATABASE.TYPE || 'sqlite',
+    type: settings.DATABASE.TYPE,
     host: settings.DATABASE.HOST,
     port: settings.DATABASE.PORT,
     username: settings.DATABASE.USERNAME,
     password: settings.DATABASE.PASSWORD,
-    database: settings.DATABASE.NAME || 'database.sqlite',
+    database: settings.DATABASE.NAME,
     entities: [
         ApiRequestHistory,
         Confirmation,
