@@ -11,13 +11,10 @@ class UserService {
     bo : UserBO;
     confirmationTypeBO : ConfirmationTypeBO;
     currentUser : User;
-    r : Result;
     appUtil : AppUtil;
     mailUtil : MailUtil;
 
     constructor() {
-        this.r = new Result();
-
         let user : User = new User();
         user.id = constants.userAdministrator.ID;
         user.profileId = constants.profile.ADMINISTRATOR_ID;
@@ -37,8 +34,9 @@ class UserService {
             let confirmation : Confirmation = new Confirmation();
 
             users = await this.bo.searchAll({ isSentMail: false, isConfirmed: false});
-            console.info('Será enviado email de confirmação para ' + users.length + ' usuários.')
-            for(let user of users) {
+            console.info('Será enviado email de confirmação para ' + users.length + ' usuários.');
+
+            for (let user of users) {
                 confirmation                    = new Confirmation();
 
                 confirmation.id                 = await this.appUtil.getNewId();
@@ -51,7 +49,7 @@ class UserService {
                 confirmation = await confirmation.save();
 
                 r = await this.mailUtil.sendMail(user.email, 'Código de confirmação de email', confirmation.code);
-                if(r.isError === false) {
+                if (r.isError === false) {
                     user.updatedByUserId                = this.currentUser.id;
                     user.updatedDate                    = new Date();
                     user.isSentMail                     = true;
@@ -60,7 +58,7 @@ class UserService {
                 }
             }
 
-            return r;
+            return Result.success;
         } catch(e) {
             console.error(e);
             return Result.returnError((e as Error).message);

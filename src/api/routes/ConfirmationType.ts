@@ -1,8 +1,8 @@
 import { Request, Response, Router } from 'express';
 import ConfirmationTypeController from "../controllers/ConfirmationTypeController";
-import { auth } from '../../middleware/Auth_v2';
+import { auth } from '../../middleware/Auth';
 
-const router = Router();
+const router : Router = Router();
 
 router.get('/api/1/confirmation-types', auth.requireAdministrator, async (req: Request, res: Response) => {
     return await new ConfirmationTypeController(req, res).getByParameters();

@@ -25,7 +25,7 @@ class User extends BaseProperty {
     @Column({ type: "boolean", default: false })
     isConfirmed: boolean;
 
-    super(entity : any = {}) {
+    super (entity : any = {}) {
         this.name               = entity.name ? entity.name : this.name;
         this.email              = entity.email ? entity.email : this.email;
         this.birthDay           = entity.birthDay ? entity.birthDay : this.birthDay;

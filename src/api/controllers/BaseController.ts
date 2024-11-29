@@ -26,7 +26,7 @@ class BaseController<BO> {
         let headersUser: any = (this.req as any).currentUser;
         let currentUser : User = new User();
         
-        if(typeof headersUser === "object"){
+        if (typeof headersUser === "object") {
             currentUser.id = headersUser.userId;
             currentUser.profileId = headersUser.profileId;
         }
@@ -36,7 +36,8 @@ class BaseController<BO> {
     }
 
     async generateApiHistory() {
-        let lock = new Lock<string>()
+        let lock = new Lock<string>();
+
         await lock.acquire("generateApiHistory");
 
         try {
@@ -50,24 +51,25 @@ class BaseController<BO> {
             } catch {}
 
             try {
-                aph.userToken = this.req.header('Authorization')?.replace('Bearer ', '') || null;
+                aph.userToken = this.req?.header('Authorization')?.replace('Bearer ', '') || null;
             } catch {}
 
             try {
-                aph.url = this.req.url || null;
+                aph.url = this.req?.url || null;
             } catch {}
 
             try {
-                aph.method = this.req.method || null;
+                aph.method = this.req?.method || null;
             } catch {}
 
             try {
-                body = Object.assign({}, this.req.body);
-                if(body && body.password && typeof body.password === 'string'){
+                body = Object.assign({}, this.req?.body);
+
+                if (typeof body?.password === 'string') {
                     body.password = "******";
                 }
 
-                if(body && body.confirmPassword && typeof body.confirmPassword === 'string'){
+                if (typeof body?.confirmPassword === 'string') {
                     body.confirmPassword = "******";
                 }
 
@@ -77,11 +79,11 @@ class BaseController<BO> {
             }
 
             try {
-                aph.ip = this.req.socket.remoteAddress || null;
+                aph.ip = this.req?.socket?.remoteAddress || null;
             } catch {}
 
             try {
-                aph.sourceApp = this.req.header('user-agent') || null;
+                aph.sourceApp = this.req?.header('user-agent') || null;
             } catch {}
 
             aph.createdDate = new Date();

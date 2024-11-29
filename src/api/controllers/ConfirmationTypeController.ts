@@ -16,11 +16,11 @@ class ConfirmationTypeController extends BaseController<ConfirmationTypeBO> {
             let filters : Filter = {};
             let query : Filter = this.req.query;
 
-            if(query.id && typeof query.id === 'string'){
+            if (typeof query?.id === 'string') {
                 filters.id = query.id;
             }
     
-            if(query.name && typeof query.name === 'string'){
+            if (typeof query?.name === 'string') {
                 filters.name = query.name;
             }
     
@@ -38,12 +38,12 @@ class ConfirmationTypeController extends BaseController<ConfirmationTypeBO> {
             let filters : Filter = {};
             let params : Filter = this.req.params;
     
-            if(params.id && typeof params.id === 'string'){
+            if (typeof params?.id === 'string') {
                 filters.id = params.id;
             }
     
             confirmationType = (await this.bo.getByParameters(filters))[0];
-            if(confirmationType === undefined){
+            if (confirmationType === undefined) {
                 return this.res.status(404).json({});
             } else {
                 return this.res.status(200).json(confirmationType);
@@ -55,15 +55,15 @@ class ConfirmationTypeController extends BaseController<ConfirmationTypeBO> {
     }
 
     async insert() : Promise<Response> {
-        let r : Result = new Result();
+        let r : Result;
         let confirmationType : ConfirmationType = new ConfirmationType();
 
-        if(this.req.body && this.req.body.name && typeof this.req.body.name === 'string'){
+        if (typeof this.req?.body?.name === 'string') {
             confirmationType.name = this.req.body.name;
         }
 
         r = await this.bo.save(confirmationType);
-        if(r.isError === true){
+        if (r.isError === true) {
             return this.res.status(r.httpCode).json(r.errors);
         } else {
             return this.res.status(201).json(r.returnObject);
@@ -71,19 +71,19 @@ class ConfirmationTypeController extends BaseController<ConfirmationTypeBO> {
     }
 
     async update() : Promise<Response> {
-        let r : Result = new Result();
+        let r : Result;
         let confirmationType : ConfirmationType = new ConfirmationType();
 
-        if(this.req.params && this.req.params.id && typeof this.req.params.id === 'string'){
+        if (typeof this.req?.params?.id === 'string') {
             confirmationType.id = this.req.params.id;
         }
 
-        if(this.req.body && this.req.body.name && typeof this.req.body.name === 'string'){
+        if (typeof this.req?.body?.name === 'string') {
             confirmationType.name = this.req.body.name;
         }
 
         r = await this.bo.save(confirmationType);
-        if(r.isError === true){
+        if (r.isError === true) {
             return this.res.status(r.httpCode).json(r.errors);
         } else {
             return this.res.status(200).json(r.returnObject);
@@ -91,15 +91,15 @@ class ConfirmationTypeController extends BaseController<ConfirmationTypeBO> {
     }
 
     async delete() : Promise<Response> {
-        let r : Result = new Result();
+        let r : Result;
         let confirmationType : ConfirmationType = new ConfirmationType();
 
-        if(this.req.params && this.req.params.id && typeof this.req.params.id === 'string'){
+        if (typeof this.req?.params?.id === 'string') {
             confirmationType.id = this.req.params.id;
         }
 
         r = await this.bo.delete(confirmationType);
-        if(r.isError === true){
+        if (r.isError === true) {
             return this.res.status(r.httpCode).json(r.errors);
         } else {
             return this.res.status(200).json(r.returnObject);

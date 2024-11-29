@@ -14,15 +14,15 @@ class PasswordDAO {
     async searchAll(filters: Filter = {}) : Promise<Array<Password>> {
         filters.where = {};
 
-        if(typeof filters.id === "string"){
+        if (typeof filters.id === "string") {
             filters.where.id = filters.id;
         }
 
-        if(typeof filters.userId === "string"){
+        if (typeof filters.userId === "string") {
             filters.where.userId = filters.userId;
         }
 
-        if(typeof filters.hash === "string"){
+        if (typeof filters.hash === "string") {
             filters.where.hash = filters.hash;
         }
 
@@ -33,15 +33,15 @@ class PasswordDAO {
     async getByParameters(filters: Filter = {}) : Promise<Array<Password>> {
         filters.where = {};
 
-        if(typeof filters.id === "string"){
+        if (typeof filters.id === "string") {
             filters.where.id = filters.id;
         }
 
-        if(typeof filters.userId === "string"){
+        if (typeof filters.userId === "string") {
             filters.where.userId = filters.userId;
         }
 
-        if(typeof filters.hash === "string"){
+        if (typeof filters.hash === "string") {
             filters.where.hash = filters.hash;
         }
 

@@ -3,20 +3,15 @@ import * as nodemailer from "nodemailer";
 import { settings } from "../config/settings";
 
 class MailUtil {
-    r : Result;
-
-    constructor() {
-        this.r = new Result();
-    }
-
     async sendMail(to : string, subject : string, message : string) : Promise<Result> {
         try {
+            let r : Result;
             let transporter : any;
             let info : any;
 
-            this.r = await this.validateSendMail(to, subject, message);
-            if(this.r.isError) {
-                return this.r;
+            r = await this.validateSendMail(to, subject, message);
+            if (r.isError) {
+                return r;
             }
 
             transporter = nodemailer.createTransport({
