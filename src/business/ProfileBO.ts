@@ -31,17 +31,15 @@ class ProfileBO {
 
     async save(profile: Profile) : Promise<Result> {
         try {
-            let r : Result = new Result();
+            let r : Result;
 
             r = await this.validateSave(profile);
-            if(r.isError === true) {
+            if (r.isError === true) {
                 return r;
             }
             profile = r.returnObject as Profile;
 
-            console.log(profile)
-
-            if(profile.id === undefined){
+            if (profile.id === undefined) {
                 profile.id = await this.appUtil.getNewId();
                 profile.createdDate = new Date();
                 profile.createdByUserId = this.currentUser.id;
@@ -64,22 +62,22 @@ class ProfileBO {
             let errors : Array<string> = [];
             let currentProfile : Profile | undefined;
 
-            if(typeof profile.id === "string" && profile.id.trim() !== ""){
+            if (typeof profile.id === "string" && profile.id.trim() !== "") {
                 currentProfile = (await this.getByParameters({ id: profile.id }))[0];
-                if(currentProfile === undefined){
+                if (currentProfile === undefined) {
                     errors.push('O id informado é inválido!');
                 }
             }
 
-            if(typeof profile.name !== "string" || profile.name.trim() === ""){
+            if (typeof profile.name !== "string" || profile.name.trim() === "") {
                 errors.push('O nome é de preenchimento obrigatório!');
             } else {
-                if((await this.getByParameters({ name: profile.name })).filter(c => c.id !== profile.id)[0] !== undefined){
+                if ((await this.getByParameters({ name: profile.name })).filter(c => c.id !== profile.id)[0] !== undefined) {
                     errors.push(`Já existe um registro cadastrado com o nome ${profile.name}`);
                 }
             }
 
-            if(errors.length > 0) {
+            if (errors.length > 0) {
                 return Result.returnErrors(errors, 422);
             }
 
@@ -92,10 +90,10 @@ class ProfileBO {
 
     async delete(profile: Profile) : Promise<Result>{
         try {
-            let r : Result = new Result();
+            let r : Result;
 
             r = await this.validateDelete(profile);
-            if(r.isError === true) {
+            if (r.isError === true) {
                 return r;
             }
             profile = r.returnObject as Profile;
@@ -118,16 +116,16 @@ class ProfileBO {
             let errors : Array<string> = [];
             let currentProfile : Profile | undefined = undefined;
 
-            if(typeof profile?.id !== "string" || profile?.id.trim() === ""){
+            if (typeof profile?.id !== "string" || profile?.id?.trim() === "") {
                 errors.push('O id é de preenchimento obrigatório!');
             } else {
                 currentProfile = (await this.getByParameters({ id: profile.id }))[0];
-                if(currentProfile === undefined){
+                if (currentProfile === undefined) {
                     errors.push('O id informado é inválido!');
                 }
             }
 
-            if(errors.length > 0) {
+            if (errors.length > 0) {
                 return Result.returnErrors(errors, 422);
             }
 

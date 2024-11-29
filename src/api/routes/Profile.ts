@@ -1,8 +1,8 @@
 import { Request, Response, Router } from 'express';
 import ProfileController from "../controllers/ProfileController";
-import { auth } from '../../middleware/Auth_v2';
+import { auth } from '../../middleware/Auth';
 
-const router = Router();
+const router : Router = Router();
 
 router.get('/api/1/profiles', auth.requireAdministrator, async (req: Request, res: Response) => {
     return await new ProfileController(req, res).getByParameters();

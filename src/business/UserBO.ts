@@ -16,7 +16,6 @@ import Filter from "../util/Filter";
 class UserBO {
     private currentUser : User;
     private dao : UserDAO;
-    private result : Result;
     private passwordBo : PasswordBO;
     private secretKey : string;
     private appUtil : AppUtil;
@@ -24,7 +23,6 @@ class UserBO {
     constructor(currentUser : User){
         this.currentUser = currentUser;
         this.dao = new UserDAO(currentUser);
-        this.result = new Result();
         this.passwordBo = new PasswordBO(currentUser);
         this.secretKey = settings.SECRET_KEY;
         this.appUtil = new AppUtil();
@@ -35,7 +33,7 @@ class UserBO {
     }
 
     async getByParameters(filters: Filter = {}) : Promise<Array<User>> {
-        if (this.currentUser.profileId !== constants.profile.ADMINISTRATOR_ID){
+        if (this.currentUser.profileId !== constants.profile.ADMINISTRATOR_ID) {
             filters.id = this.currentUser.id;
         }
 
@@ -44,12 +42,12 @@ class UserBO {
     
     async signup(entity: Filter = {}) : Promise<Result> {
         try {
-            let r : Result = new Result();
+            let r : Result;
             let user : User;
             let password : Password = new Password();
 
             r = await this.validateSave(entity);
-            if(r.isError === true) {
+            if (r.isError === true) {
                 return r;
             }
             entity = r.returnObject;
@@ -83,15 +81,15 @@ class UserBO {
             let errors : Array<string> = [];
             let user : User | undefined;
 
-            if(typeof entity.name !== "string" || entity.name.trim() === ""){
+            if (typeof entity.name !== "string" || entity.name.trim() === "") {
                 errors.push('O nome é de preenchimento obrigatório!');
             } else {
                 entity.name = entity.name.trim();
             }
 
-            if(typeof entity.email !== "string" || entity.email.trim() === ""){
+            if (typeof entity?.email !== "string" || entity?.email?.trim() === "") {
                 errors.push('O email é de preenchimento obrigatório!');
-            } else if(await this.validateEmail(entity.email.trim()) === false){
+            } else if (await this.validateEmail(entity.email.trim()) === false) {
                 errors.push('O email é inválido!');
             } else {
                 entity.email = entity.email.trim();
@@ -99,26 +97,26 @@ class UserBO {
                 user = (await this.searchAll({
                     email: entity.email
                 }))[0];
-                if(user as User) {
+                if (user as User) {
                     errors.push('Existe uma conta cadastrada com o email informado!');
                 }
             }
 
-            if(typeof entity.birthDay !== "string" || entity.birthDay.trim() === ""){
+            if (typeof entity?.birthDay !== "string" || entity?.birthDay.trim() === "") {
                 errors.push('A data de nascimento é de preenchimento obrigatório!');
-            } else if(moment(entity.birthDay, 'YYYY-MM-DD', true).isValid() === false){
+            } else if (moment(entity.birthDay, 'YYYY-MM-DD', true).isValid() === false) {
                 errors.push('A data de nascimento é inválida!');
             }
 
-            if(typeof entity.password !== "string" || entity.password.trim() === ""){
+            if (typeof entity.password !== "string" || entity.password.trim() === "") {
                 errors.push('A senha é de preenchimento obrigatório!');
-            } else if(typeof entity.confirmPassword !== "string" || entity.confirmPassword.trim() === ""){
+            } else if (typeof entity.confirmPassword !== "string" || entity.confirmPassword.trim() === "") {
                 errors.push('A senha de confirmação é de preenchimento obrigatório!');
-            } else if(entity.password !== entity.confirmPassword){
+            } else if (entity.password !== entity.confirmPassword) {
                 errors.push('A senha de confirmação é diferente da senha informada!');
             }
 
-            if(errors.length > 0) {
+            if (errors.length > 0) {
                 return Result.returnErrors(errors, 422);
             }
 
@@ -151,16 +149,17 @@ class UserBO {
 
     async auth(entity : Filter = {}) : Promise<Result> {
         try {
-            let r : Result = new Result();
+            let r : Result;
             let user : User;
+            let token : string;
 
             r = await this.validateAuth(entity);
-            if(r.isError === true) {
+            if (r.isError === true) {
                 return r;
             }
             user = r.returnObject as User;
 
-            const token = jwt.sign({ userId: user.id, profileId: user.profileId }, this.secretKey, {
+            token = jwt.sign({ userId: user.id, profileId: user.profileId }, this.secretKey, {
                 expiresIn: '2 days',
             });
 
@@ -184,33 +183,33 @@ class UserBO {
             let password : Password | undefined;
             let errors : Array<string> = [];
 
-            if(typeof entity.email !== "string" || entity.email.trim() === ""){
+            if (typeof entity.email !== "string" || entity.email.trim() === "") {
                 errors.push('O email é de preenchimento obrigatório!');
             }
 
-            if(typeof entity.password !== "string" || entity.password.trim() === ""){
+            if (typeof entity.password !== "string" || entity.password.trim() === "") {
                 errors.push('A senha é de preenchimento obrigatório!');
             }
 
-            if(errors.length > 0) {
+            if (errors.length > 0) {
                 return Result.returnErrors(errors, 422);
             }
 
             user = (await this.searchAll({ email: entity.email }))[0];
-            if(user === undefined) {
+            if (user === undefined) {
                 return Result.returnError('O email ou a senha é inválida.', 401);
             }
 
             password = (await this.passwordBo.searchAll({ userId: user.id }))[0];
-            if(password === undefined) {
+            if (password === undefined) {
                 return Result.returnError('O email ou a senha é inválida.', 401);
             }
 
-            if(bcrypt.compareSync(entity.password, password.hash) === false) {
+            if (bcrypt.compareSync(entity.password, password.hash) === false) {
                 return Result.returnError('O email ou a senha é inválida.', 401);
             }
 
-            if(user.isConfirmed === false) {
+            if (user.isConfirmed === false) {
                 return Result.returnError('É necessário confirmar a conta com o código recebido.', 401);
             }
 
@@ -222,11 +221,11 @@ class UserBO {
 
     async confirm(entity : Filter = {}) : Promise<Result> {
         try {
-            let r : Result = new Result();
+            let r : Result;
             let user : User;
 
             r = await this.validateConfirm(entity);
-            if(r.isError === true){
+            if (r.isError === true) {
                 return r;
             }
             user = r.returnObject as User;
@@ -250,28 +249,28 @@ class UserBO {
             let user : User | undefined;
             let confirmation : Confirmation | undefined;
 
-            if(typeof entity.userId !== "string" || entity.userId === "") {
+            if (typeof entity.userId !== "string" || entity.userId === "") {
                 errors.push('O usuário é de preenchimento obrigatório!');
-            } else if(typeof entity.userId === "string" && entity.userId.length != 36) {
+            } else if (typeof entity.userId === "string" && entity.userId.length != 36) {
                 errors.push('O usuário informado é inválido!');
             }
 
-            if(typeof entity.code !== "string" || entity.code === "") {
+            if (typeof entity.code !== "string" || entity.code === "") {
                 errors.push('O código é de preenchimento obrigatório!');
-            } else if(typeof entity.code === "string" && entity.code.length != 6) {
+            } else if (typeof entity.code === "string" && entity.code.length != 6) {
                 errors.push('O código informado é inválido!');
-            } else if(Number.isNaN(entity.code) === true) {
+            } else if (Number.isNaN(entity.code) === true) {
                 errors.push('O código informado é inválido!');
             }
 
-            if(errors.length > 0) {
+            if (errors.length > 0) {
                 return Result.returnErrors(errors, 422);
             }
 
             user = (await this.searchAll({ id: entity.userId }))[0];
-            if(user === undefined) {
+            if (user === undefined) {
                 return Result.returnError('O usuário informado é inválido!', 422);
-            } else if(user.isConfirmed) {
+            } else if (user.isConfirmed) {
                 return Result.returnError('O usuário informado já está validado!', 422);
             }
 
@@ -281,7 +280,7 @@ class UserBO {
                 validateLimiteValidation: true,
                 typeId: constants.confirmationType.USER_REGISTRATION_SIGN_IN_ID
             }))[0];
-            if(confirmation === undefined) {
+            if (confirmation === undefined) {
                 return Result.returnError('O usuário e/ou código de confirmação são inválidos!', 422);
             }
 

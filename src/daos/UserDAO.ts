@@ -5,7 +5,6 @@ import Filter from "../util/Filter";
 
 class UserDAO {
     private currentUser : User;
-    private users : Array<User>;
 
     constructor(currentUser : User){
         this.currentUser = currentUser;
@@ -14,51 +13,50 @@ class UserDAO {
     async searchAll(filters: Filter = {}) : Promise<Array<User>> {
         filters.where = {};
 
-        if(typeof filters.id === "string"){
+        if (typeof filters.id === "string") {
             filters.where.id = filters.id;
         }
 
-        if(typeof filters.name === "string"){
+        if (typeof filters.name === "string") {
             filters.where.name = Like(`%${filters.name}%`);
         }
 
-        if(typeof filters.email === "string"){
+        if (typeof filters.email === "string") {
             filters.where.email = filters.email;
         }
 
-        if(typeof filters.profileId === "string"){
+        if (typeof filters.profileId === "string") {
             filters.where.profileId = filters.profileId;
         }
 
-        if(typeof filters.isSentMail === "boolean"){
+        if (typeof filters.isSentMail === "boolean") {
             filters.where.isSentMail = filters.isSentMail;
         }
 
-        if(typeof filters.isConfirmed === "boolean"){
+        if (typeof filters.isConfirmed === "boolean") {
             filters.where.isConfirmed = filters.isConfirmed;
         }
 
         filters.where.isEnabled = true;
-
         return await User.getRepository().find(filters);
     }
 
     async getByParameters(filters: Filter = {}) : Promise<Array<User>> {
         filters.where = {};
 
-        if(typeof filters.id === "string"){
+        if (typeof filters.id === "string" ) {
             filters.where.id = filters.id;
         }
 
-        if(typeof filters.name === "string"){
+        if (typeof filters.name === "string") {
             filters.where.name = Like(`%${filters.name}%`);
         }
 
-        if(typeof filters.email === "string"){
+        if (typeof filters.email === "string") {
             filters.where.email = filters.email;
         }
 
-        if(typeof filters.birthDay === "string"){
+        if (typeof filters.birthDay === "string") {
             filters.where.birthDay = filters.birthDay;
         }
 

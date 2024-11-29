@@ -11,7 +11,7 @@ class ConfirmationTypeBO {
     private dao : ConfirmationTypeDAO;
     private appUtil : AppUtil;
     
-    constructor(currentUser : User){
+    constructor(currentUser : User) {
         this.currentUser = currentUser;
         this.dao = new ConfirmationTypeDAO(currentUser);
         this.appUtil = new AppUtil();
@@ -23,24 +23,24 @@ class ConfirmationTypeBO {
 
     async getByParameters(filters: Filter = {}) : Promise<Array<ConfirmationType>> {
 
-        if(this.currentUser.profileId !== constants.profile.ADMINISTRATOR_ID){
+        if (this.currentUser.profileId !== constants.profile.ADMINISTRATOR_ID) {
             filters.createdByUserId = this.currentUser.id;
         }
 
         return await this.dao.getByParameters(filters);
     }
 
-    async save(confirmationType: ConfirmationType) : Promise<Result>{
+    async save(confirmationType: ConfirmationType) : Promise<Result> {
         try {
-            let r : Result = new Result();
+            let r : Result;
 
             r = await this.validateSave(confirmationType);
-            if(r.isError === true) {
+            if (r.isError === true) {
                 return r;
             }
             confirmationType = r.returnObject as ConfirmationType;
 
-            if(confirmationType.id === undefined){
+            if (confirmationType.id === undefined) {
                 confirmationType.id = await this.appUtil.getNewId();
                 confirmationType.createdDate = new Date();
                 confirmationType.createdByUserId = this.currentUser.id;
@@ -62,24 +62,25 @@ class ConfirmationTypeBO {
         try {
             let errors : Array<string> = [];
             let currentCT : ConfirmationType | undefined;
+            let rs : ConfirmationType | undefined;
 
-            if(typeof confirmationType.id === "string" && confirmationType.id.trim() !== ""){
+            if (typeof confirmationType.id === "string" && confirmationType.id.trim() !== "") {
                 currentCT = (await this.getByParameters({ id: confirmationType.id }))[0];
-                if(currentCT === undefined){
+                if (currentCT === undefined) {
                     errors.push('O id informado é inválido!');
                 }
             }
 
-            if(typeof confirmationType.name !== "string" || confirmationType.name.trim() === ""){
+            if (typeof confirmationType.name !== "string" || confirmationType.name.trim() === "") {
                 errors.push('O nome é de preenchimento obrigatório!');
             } else {
-                let rs = (await this.getByParameters({ name: confirmationType.name })).filter(c => c.id !== confirmationType.id)[0];
-                if(rs !== undefined){
+                rs = (await this.getByParameters({ name: confirmationType.name })).filter(c => c.id !== confirmationType.id)[0];
+                if (rs !== undefined) {
                     errors.push(`Já existe um registro cadastrado com o nome ${confirmationType.name}`);
                 }
             }
 
-            if(errors.length > 0) {
+            if (errors.length > 0) {
                 return Result.returnErrors(errors, 422);
             }
 
@@ -93,10 +94,10 @@ class ConfirmationTypeBO {
 
     async delete(confirmationType: ConfirmationType) : Promise<Result>{
         try {
-            let r : Result = new Result();
+            let r : Result;
 
             r = await this.validateDelete(confirmationType);
-            if(r.isError === true) {
+            if (r.isError === true) {
                 return r;
             }
             confirmationType = r.returnObject as ConfirmationType;
@@ -119,16 +120,16 @@ class ConfirmationTypeBO {
             let errors : Array<string> = [];
             let currentCT : ConfirmationType | undefined = undefined;
 
-            if(typeof confirmationType?.id !== "string" || confirmationType?.id.trim() === ""){
+            if (typeof confirmationType?.id !== "string" || confirmationType?.id.trim() === "") {
                 errors.push('O id é de preenchimento obrigatório!');
             } else {
                 currentCT = (await this.getByParameters({ id: confirmationType.id }))[0];
-                if(currentCT === undefined){
+                if (currentCT === undefined) {
                     errors.push('O id informado é inválido!');
                 }
             }
 
-            if(errors.length > 0) {
+            if (errors.length > 0) {
                 return Result.returnErrors(errors, 422);
             }
 

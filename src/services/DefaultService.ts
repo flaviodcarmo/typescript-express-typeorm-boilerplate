@@ -41,10 +41,8 @@ class DefaultService {
             let confirmationType : ConfirmationType;
 
             //create administrator user id
-            admUser = (await this.userBo.searchAll({
-                id: constants.userAdministrator.ID
-            }))[0];
-            if(admUser === undefined){
+            admUser = (await this.userBo.searchAll({ id: constants.userAdministrator.ID }))[0];
+            if (admUser === undefined) {
                 admUser = new User();
 
                 admUser.id = constants.userAdministrator.ID;
@@ -61,10 +59,8 @@ class DefaultService {
             }
 
             //create administrator profile id
-            profile = (await this.profileBo.searchAll({
-                id: constants.profile.ADMINISTRATOR_ID
-            }))[0];
-            if(profile === undefined){
+            profile = (await this.profileBo.searchAll({ id: constants.profile.ADMINISTRATOR_ID }))[0];
+            if (profile === undefined) {
                 profile = new Profile();
 
                 profile.id = constants.profile.ADMINISTRATOR_ID;
@@ -79,10 +75,8 @@ class DefaultService {
             }
 
             //create user profile id
-            profile = (await this.profileBo.searchAll({
-                id: constants.profile.USER_ID
-            }))[0];
-            if(profile === undefined){
+            profile = (await this.profileBo.searchAll({ id: constants.profile.USER_ID }))[0];
+            if (profile === undefined) {
                 profile = new Profile();
 
                 profile.id = constants.profile.USER_ID;
@@ -94,10 +88,8 @@ class DefaultService {
             }
 
             //create confirmationTypeSignIn
-            confirmationType = (await this.confirmationTypeBO.searchAll({
-                id: constants.confirmationType.USER_REGISTRATION_SIGN_IN_ID
-            }))[0];
-            if(confirmationType === undefined){
+            confirmationType = (await this.confirmationTypeBO.searchAll({ id: constants.confirmationType.USER_REGISTRATION_SIGN_IN_ID }))[0];
+            if (confirmationType === undefined) {
                 confirmationType = new ConfirmationType();
 
                 confirmationType.id = constants.confirmationType.USER_REGISTRATION_SIGN_IN_ID;

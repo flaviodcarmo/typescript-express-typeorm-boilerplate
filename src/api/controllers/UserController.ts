@@ -6,8 +6,6 @@ import Result from "../../util/Result";
 import Filter from "../../util/Filter";
 
 class UserController extends BaseController<UserBO> {
-    private result          : Result;
-
     constructor(req: Request, res: Response) {
         super(req, res, UserBO);
     }
@@ -18,15 +16,15 @@ class UserController extends BaseController<UserBO> {
             let filters : Filter = {};
             let query : Filter = this.req.query;
     
-            if(query.id && typeof query.id === 'string'){
+            if (typeof query?.id === 'string') {
                 filters.id = query.id;
             }
     
-            if(query.name && typeof query.name === 'string'){
+            if (typeof query?.name === 'string') {
                 filters.name = query.name;
             }
     
-            if(query.birthDay && typeof query.birthDay === 'string'){
+            if (typeof query?.birthDay === 'string') {
                 filters.birthDay = query.birthDay;
             }
     
@@ -44,12 +42,12 @@ class UserController extends BaseController<UserBO> {
             let filters : Filter = {};
             let params : Filter = this.req.params;
 
-            if(params.id && typeof params.id === 'string'){
+            if (typeof params?.id === 'string') {
                 filters.id = params.id;
             }
 
             user = (await this.bo.getByParameters(filters))[0];
-            if(user === undefined){
+            if (user === undefined) {
                 return this.res.status(404).json({});
             } else {
                 return this.res.status(200).json(user);
@@ -61,37 +59,42 @@ class UserController extends BaseController<UserBO> {
     }
 
     async signup() : Promise<Response> {
-        this.result = await this.bo.signup(this.req.body);
+        let r : Result;
 
-        if(this.result.isError === true){
-            return this.res.status(this.result.httpCode).json(this.result.errors);
+        r = await this.bo.signup(this.req.body);
+
+        if (r.isError === true) {
+            return this.res.status(r.httpCode).json(r.errors);
         } else {
-            return this.res.status(201).json(this.result.returnObject);
+            return this.res.status(201).json(r.returnObject);
         }
     }
 
     async auth(): Promise<Response> {
-        this.result = await this.bo.auth(this.req.body);
+        let r : Result;
 
-        if(this.result.isError === true){
-            return this.res.status(this.result.httpCode).json(this.result.errors);
+        r = await this.bo.auth(this.req.body);
+
+        if (r.isError === true) {
+            return this.res.status(r.httpCode).json(r.errors);
         } else {
-            return this.res.status(201).json(this.result.returnObject);
+            return this.res.status(201).json(r.returnObject);
         }
     }
 
     async confirm(): Promise<Response> {
         try {
+            let r : Result;
             let entity : Filter = {};
 
             entity.userId = this.req.params.id;
             entity.code = this.req.body.code;
 
-            this.result = await this.bo.confirm(entity);
-            if(this.result.isError === true) {
-                return this.res.status(this.result.httpCode).json(this.result.errors);
+            r = await this.bo.confirm(entity);
+            if (r.isError === true) {
+                return this.res.status(r.httpCode).json(r.errors);
             } else {
-                return this.res.status(201).json(this.result.returnObject);
+                return this.res.status(201).json(r.returnObject);
             }
         } catch(e) {
             console.error(e);

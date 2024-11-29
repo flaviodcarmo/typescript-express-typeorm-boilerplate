@@ -12,15 +12,15 @@ class ConfirmationTypeDAO {
     async searchAll(filters: Filter = {}) : Promise<Array<ConfirmationType>> {
         filters.where = {};
 
-        if(typeof filters.id === "string"){
+        if (typeof filters.id === "string") {
             filters.where.id = filters.id;
         }
 
-        if(typeof filters.name === "string"){
+        if (typeof filters.name === "string") {
             filters.where.name = filters.name;
         }
 
-        if(typeof filters.createdByUserId === "string"){
+        if (typeof filters.createdByUserId === "string") {
             filters.where.createdByUserId = filters.createdByUserId;
         }
 
@@ -31,15 +31,15 @@ class ConfirmationTypeDAO {
     async getByParameters(filters: Filter = {}) : Promise<Array<ConfirmationType>> {
         filters.where = {};
 
-        if(typeof filters.id === "string"){
+        if (typeof filters.id === "string") {
             filters.where.id = filters.id;
         }
 
-        if(typeof filters.name === "string"){
+        if (typeof filters.name === "string") {
             filters.where.name = filters.name;
         }
 
-        if(typeof filters.createdByUserId === "string"){
+        if (typeof filters.createdByUserId === "string") {
             filters.where.createdByUserId = filters.createdByUserId;
         }
 

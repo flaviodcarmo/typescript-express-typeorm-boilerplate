@@ -8,7 +8,7 @@ class ConfirmationBO {
     private currentUser : User;
     private dao : ConfirmationDAO;
     
-    constructor(currentUser : User){
+    constructor(currentUser : User) {
         this.currentUser = currentUser;
         this.dao = new ConfirmationDAO(currentUser);
     }
@@ -18,7 +18,7 @@ class ConfirmationBO {
     }
 
     async getByParameters(filters: Filter = {}) : Promise<Array<Confirmation>> {
-        if(this.currentUser.profileId !== constants.profile.ADMINISTRATOR_ID){
+        if (this.currentUser.profileId !== constants.profile.ADMINISTRATOR_ID) {
             filters.userId = this.currentUser.id;
         }
 
