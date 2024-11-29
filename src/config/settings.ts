@@ -22,16 +22,16 @@ export const settings : any =
         PASSWORD: process.env["MAIL_PASSWORD"]
     },
     TESTS: {
-        PORT: 3313,
+        PORT: process.env["TEST_PORT"],
         USERS: {
             ADMINISTRATOR:
             {
-                EMAIL: '',
-                PASSWORD: ''
+                EMAIL: process.env["TEST_USER_ADMINISTRATOR_EMAIL"],
+                PASSWORD: process.env["TEST_USER_ADMINISTRATOR_PASSWORD"]
             },
             USER: {
-                EMAIL: '',
-                PASSWORD: ''
+                EMAIL: process.env["TEST_USER_USER_EMAIL"],
+                PASSWORD: process.env["TEST_USER_USER_PASSWORD"]
             }
         }
     }

@@ -104,7 +104,7 @@ class ConfirmationTypeBO {
 
             confirmationType.deletedByUserId = this.currentUser.id;
             confirmationType.deletedDate = new Date();
-            confirmationType.isEnabled = 0;
+            confirmationType.isEnabled = false;
 
             confirmationType = await confirmationType.save();
 

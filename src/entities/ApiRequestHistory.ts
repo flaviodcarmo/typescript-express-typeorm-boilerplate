@@ -9,22 +9,22 @@ class ApiRequestHistory extends BaseEntity {
     @Column({ type: "varchar", default: null })
     userId: string | null;
 
-    @Column({ type: "varchar" })
+    @Column({ type: "varchar", nullable: true })
     ip: string | null;
 
-    @Column({ type: "varchar" })
+    @Column({ type: "varchar", nullable: true })
     sourceApp: string | null;
 
     @Column({ type: "varchar", length: 300, nullable: true })
     userToken: string | null;
 
-    @Column({ type: "varchar" })
+    @Column({ type: "varchar", nullable: true })
     url: string | null;
 
-    @Column({ type: "varchar" })
+    @Column({ type: "varchar", nullable: true })
     method: string | null;
 
-    @Column({ type: "varchar" })
+    @Column({ type: "varchar", nullable: true })
     body: string | null;
 
     @Column({ type: "datetime", select: false })

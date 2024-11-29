@@ -49,7 +49,6 @@ describe('getAll', () => {
         confirmationType.name = "getAllConfirmationTypeTest";
         confirmationType.createdByUserId = administratorUserId;
         confirmationType.createdDate = new Date();
-        confirmationType.isEnabled = 1;
 
         confirmationType = await confirmationType.save();
     });
@@ -93,7 +92,6 @@ describe('getById', () => {
         confirmationType.name = "test";
         confirmationType.createdByUserId = administratorUserId;
         confirmationType.createdDate = new Date();
-        confirmationType.isEnabled = 1;
 
         confirmationType = await confirmationType.save();
     });
@@ -182,7 +180,6 @@ describe('update', () => {
         confirmationType.name = "test";
         confirmationType.createdByUserId = administratorUserId;
         confirmationType.createdDate = new Date();
-        confirmationType.isEnabled = 1;
 
         confirmationType = await confirmationType.save();
 
@@ -190,7 +187,6 @@ describe('update', () => {
         confirmationTypev2.name = "test2";
         confirmationTypev2.createdByUserId = administratorUserId;
         confirmationTypev2.createdDate = new Date();
-        confirmationTypev2.isEnabled = 1;
 
         confirmationTypev2 = await confirmationTypev2.save();
     });
@@ -260,7 +256,6 @@ describe('delete', () => {
         confirmationType.name = "test";
         confirmationType.createdByUserId = administratorUserId;
         confirmationType.createdDate = new Date();
-        confirmationType.isEnabled = 1;
 
         confirmationType = await confirmationType.save();
     });

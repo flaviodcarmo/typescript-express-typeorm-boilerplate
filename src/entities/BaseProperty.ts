@@ -21,7 +21,7 @@ class BaseProperty extends BaseEntity {
     deletedDate: Date;
 
     @Column({ type: "boolean", select: false, default: true })
-    isEnabled: number;
+    isEnabled: boolean;
 }
 
 export default BaseProperty;
