@@ -100,7 +100,7 @@ class ProfileBO {
 
             profile.deletedByUserId = this.currentUser.id;
             profile.deletedDate = new Date();
-            profile.isEnabled = 0;
+            profile.isEnabled = false;
 
             profile = await profile.save();
 

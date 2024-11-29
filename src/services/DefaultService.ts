@@ -1,12 +1,12 @@
 import User from "../entities/User";
 import Profile from "../entities/Profile";
 import ConfirmationType from "../entities/ConfirmationType";
+import Password from "../entities/Password";
 import UserBO from "../business/UserBO";
 import ProfileBO from "../business/ProfileBO";
 import ConfirmationTypeBO from "../business/ConfirmationTypeBO";
 import { constants } from "../util/Constants";
 import Result from "../util/Result";
-import Confirmation from "../entities/Confirmation";
 import AppUtil from "../util/AppUtil";
 import MailUtil from "../util/MailUtil";
 import moment from "moment";
@@ -37,8 +37,10 @@ class DefaultService {
     async createDefaultData() : Promise<Result> {
         try {
             let admUser : User;
+            let regularUser : User;
             let profile : Profile;
             let confirmationType : ConfirmationType;
+            let password : Password = new Password();
 
             //create administrator user id
             admUser = (await this.userBo.searchAll({ id: constants.userAdministrator.ID }))[0];
@@ -56,6 +58,36 @@ class DefaultService {
                 admUser.createdByUserId = admUser.id;
 
                 admUser = await admUser.save();
+
+                password.id = await this.appUtil.getNewId();
+                password.userId = admUser.id;
+                password.hash = await this.userBo.passwordToHash(constants.userAdministrator.PASSWORD);
+                password.createdByUserId = admUser.id;
+                password = await password.save();
+            }
+
+            //create regular user id
+            regularUser = (await this.userBo.searchAll({ id: constants.userRegular.ID }))[0];
+            if (regularUser === undefined) {
+                regularUser = new User();
+
+                regularUser.id = constants.userRegular.ID;
+                regularUser.name = constants.userRegular.NAME;
+                regularUser.email = constants.userRegular.EMAIL;
+                regularUser.birthDay = moment().format("YYYY-MM-DD");
+                regularUser.profileId = null;
+                regularUser.isConfirmed = true;
+                regularUser.isSentMail = true;
+
+                regularUser.createdByUserId = regularUser.id;
+
+                regularUser = await regularUser.save();
+
+                password.id = await this.appUtil.getNewId();
+                password.userId = regularUser.id;
+                password.hash = await this.userBo.passwordToHash(constants.userRegular.PASSWORD);
+                password.createdByUserId = regularUser.id;
+                password = await password.save();
             }
 
             //create administrator profile id
@@ -85,6 +117,9 @@ class DefaultService {
                 profile.createdByUserId = admUser.id;
 
                 profile = await profile.save();
+                
+                regularUser.profileId = profile.id;
+                regularUser = await regularUser.save();
             }
 
             //create confirmationTypeSignIn

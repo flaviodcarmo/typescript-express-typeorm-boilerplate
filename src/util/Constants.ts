@@ -6,7 +6,14 @@ export const constants = {
     userAdministrator: {
         ID : process.env["DEFAULT_ADMINSTRATOR_USER_ID"] || '',
         NAME: process.env["DEFAULT_ADMINSTRATOR_USER_NAME"] || '',
-        EMAIL: process.env["DEFAULT_ADMINSTRATOR_USER_EMAIL"] || ''
+        EMAIL: process.env["DEFAULT_ADMINSTRATOR_USER_EMAIL"] || '',
+        PASSWORD: process.env["DEFAULT_ADMINSTRATOR_USER_PASSWORD"] || ''
+    },
+    userRegular: {
+        ID : process.env["DEFAULT_REGULAR_USER_ID"] || '',
+        NAME: process.env["DEFAULT_REGULAR_USER_NAME"] || '',
+        EMAIL: process.env["DEFAULT_REGULAR_USER_EMAIL"] || '',
+        PASSWORD: process.env["DEFAULT_REGULAR_USER_PASSWORD"] || ''
     },
     profile: {
         ADMINISTRATOR_ID:   process.env["DEFAULT_ADMINSTRATOR_PROFILE_ID"] || '',
