@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+
 dotenv.config();
 
 export const settings : any = 
@@ -11,7 +12,7 @@ export const settings : any =
         PORT: process.env["DATABASE_PORT"],
         USERNAME: process.env["USERNAME"],
         PASSWORD: process.env["PASSWORD"],
-        NAME: process.env["DATABASE"]
+        NAME: process.env["DATABASE_NAME"]
     },
     MAIL: {
         HOST: process.env["MAIL_HOST"],

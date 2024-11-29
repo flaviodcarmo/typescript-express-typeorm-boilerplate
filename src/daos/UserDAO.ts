@@ -34,6 +34,10 @@ class UserDAO {
             filters.where.isSentMail = filters.isSentMail;
         }
 
+        if(typeof filters.isConfirmed === "boolean"){
+            filters.where.isConfirmed = filters.isConfirmed;
+        }
+
         filters.where.isEnabled = true;
 
         return await User.getRepository().find(filters);

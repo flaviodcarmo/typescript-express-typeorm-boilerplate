@@ -114,12 +114,12 @@ class ConfirmationTypeBO {
         }
     }
 
-    async validateDelete(confirmationType: ConfirmationType) : Promise<Result> {
+    async validateDelete(confirmationType: ConfirmationType | undefined) : Promise<Result> {
         try {
             let errors : Array<string> = [];
             let currentCT : ConfirmationType | undefined = undefined;
 
-            if(typeof confirmationType.id !== "string" || confirmationType.id.trim() === ""){
+            if(typeof confirmationType?.id !== "string" || confirmationType?.id.trim() === ""){
                 errors.push('O id é de preenchimento obrigatório!');
             } else {
                 currentCT = (await this.getByParameters({ id: confirmationType.id }))[0];

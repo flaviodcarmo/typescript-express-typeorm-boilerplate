@@ -54,7 +54,7 @@ class UserService {
                 if(r.isError === false) {
                     user.updatedByUserId                = this.currentUser.id;
                     user.updatedDate                    = new Date();
-                    user.isSentMail                     = 1;
+                    user.isSentMail                     = true;
 
                     user = await user.save();
                 }
@@ -63,7 +63,7 @@ class UserService {
             return r;
         } catch(e) {
             console.error(e);
-            return Result.returnError(e.message);
+            return Result.returnError((e as Error).message);
         }
     }
 }

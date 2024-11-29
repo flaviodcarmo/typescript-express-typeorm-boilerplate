@@ -105,3 +105,6 @@ dist
 
 # docker compose file
 docker-compose.yml
+
+# database sqlite
+database.sqlite

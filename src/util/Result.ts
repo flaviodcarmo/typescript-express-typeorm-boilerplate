@@ -1,8 +1,6 @@
-import { ReturningStatementNotSupportedError } from "typeorm";
-
 class Result {
     isError         : boolean = false;
-    errorMessage    : string;
+    errorMessage    : string | null;
     errors          : Array<string> = [];
     returnObject    : any = {};
     message         : string;
@@ -10,7 +8,7 @@ class Result {
     static success  : Result = Result.returnSuccess();
     static error    : Result = Result.returnError();
 
-    static returnErrors(errors : Array<string>, httpCode : number = null) : Result {
+    static returnErrors(errors : Array<string>, httpCode : number | null = null) : Result {
         let r : Result      = new Result();
 
         r.isError           = true;
@@ -20,18 +18,18 @@ class Result {
         return r;
     }
 
-    static returnError(error : string = null, httpCode : number = null) : Result {
+    static returnError(error : string | null = null, httpCode : number | null = null) : Result {
         let r : Result      = new Result();
 
         r.isError           = true;
         r.errorMessage      = error;
-        r.errors            = [error];
+        r.errors            = error === null ? [] : [error];
         r.httpCode          = httpCode != null ? httpCode : r.httpCode;
 
         return r;
     }
 
-    static returnSuccess(object : any = null, httpCode : number = null) : Result {
+    static returnSuccess(object : any = null, httpCode : number | null = null) : Result {
         let r : Result      = new Result();
 
         r.isError           = false;

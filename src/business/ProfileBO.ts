@@ -113,12 +113,12 @@ class ProfileBO {
         }
     }
 
-    async validateDelete(profile: Profile) : Promise<Result> {
+    async validateDelete(profile: Profile | undefined) : Promise<Result> {
         try {
             let errors : Array<string> = [];
             let currentProfile : Profile | undefined = undefined;
 
-            if(typeof profile.id !== "string" || profile.id.trim() === ""){
+            if(typeof profile?.id !== "string" || profile?.id.trim() === ""){
                 errors.push('O id é de preenchimento obrigatório!');
             } else {
                 currentProfile = (await this.getByParameters({ id: profile.id }))[0];

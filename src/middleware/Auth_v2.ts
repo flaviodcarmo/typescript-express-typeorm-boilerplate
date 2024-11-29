@@ -5,23 +5,33 @@ import { constants } from "../util/Constants";
 
 import UserBO from "../business/UserBO";
 
+import User from "../entities/User";
+
+type CustomRequest = Request & {
+    currentUser?: { userId: string; profileId: string };
+};
+
 export const auth = 
 {
     requireLogin: async (req: Request, res: Response, next: NextFunction) => {
         try {
             let user : any;
-            let userBO : UserBO = new UserBO(null);
+            let userBO : UserBO = new UserBO(new User());
 
-            const token : string = req.header('Authorization')?.replace('Bearer ', '');
+            const token : string | undefined = req.header('Authorization')?.replace('Bearer ', '');
             if(typeof token !== "string" || token.trim() === ""){
                 throw new Error('Você não está logado.');
             }
     
             const decoded : any = jwt.verify(token, settings.SECRET_KEY);
-            req['currentUser'] = { 
+
+            const customReq = req as CustomRequest;
+            customReq.currentUser = { 
                 userId: decoded.userId, 
                 profileId: decoded.profileId 
             };
+
+            req = customReq;
 
             if(
                 decoded.userId && 
@@ -41,25 +51,29 @@ export const auth =
             
             next();
         } catch (e) {
-            res.status(401).json([e.message]);
+            res.status(401).json([(e as Error).message]);
         }
     },
 
     requireAdministrator: async (req: Request, res: Response, next: NextFunction) => {
         try {
             let user : any;
-            let userBO : UserBO = new UserBO(null);
+            let userBO : UserBO = new UserBO(new User());
 
-            const token : string = req.header('Authorization')?.replace('Bearer ', '');
+            const token : string | undefined = req.header('Authorization')?.replace('Bearer ', '');
             if(typeof token !== "string" || token.trim() === ""){
                 throw new Error();
             }
     
             const decoded : any = jwt.verify(token, settings.SECRET_KEY);
-            req['currentUser'] = { 
+
+            const customReq = req as CustomRequest;
+            customReq.currentUser = { 
                 userId: decoded.userId, 
                 profileId: decoded.profileId 
             };
+
+            req = customReq;
 
             if(
                 decoded.userId && 
@@ -77,13 +91,13 @@ export const auth =
                 throw new Error('Erro ao buscar o usuário.');
             }
 
-            if(req['currentUser'].profileId !== constants.profile.ADMINISTRATOR_ID) {
+            if (customReq.currentUser.profileId !== constants.profile.ADMINISTRATOR_ID) {
                 return res.status(405).json(['Você não tem permissão para acessar essa rota.']);
             }
             
             next();
         } catch (e) {
-            res.status(401).json([e.message]);
+            res.status(401).json([(e as Error).message]);
         }
     },
 }

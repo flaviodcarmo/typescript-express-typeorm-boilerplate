@@ -23,7 +23,7 @@ class BaseController<BO> {
     }
 
     async getCurrentUser(bo : any) {
-        let headersUser : any = this.req['currentUser'];
+        let headersUser: any = (this.req as any).currentUser;
         let currentUser : User = new User();
         
         if(typeof headersUser === "object"){
@@ -46,7 +46,7 @@ class BaseController<BO> {
             aph.id = await this.appUtil.getNewId();
 
             try {
-                aph.userId = this.req['currentUser'].userId || null;
+                aph.userId = (this.req as any)?.currentUser?.userId || null;
             } catch {}
 
             try {
@@ -73,7 +73,7 @@ class BaseController<BO> {
 
                 aph.body = JSON.stringify(body) || null;
             } catch (e) {
-                console.error(e.message)
+                console.error((e as Error).message)
             }
 
             try {
@@ -88,7 +88,7 @@ class BaseController<BO> {
 
             aph = await aph.save();
         } catch(e) {
-            console.error(e.message);
+            console.error((e as Error).message);
         } finally {
             lock.release("generateApiHistory");
         }

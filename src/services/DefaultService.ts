@@ -52,8 +52,8 @@ class DefaultService {
                 admUser.email = constants.userAdministrator.EMAIL;
                 admUser.birthDay = moment().format("YYYY-MM-DD");
                 admUser.profileId = null;
-                admUser.isConfirmed = 1;
-                admUser.isSentMail = 1;
+                admUser.isConfirmed = true;
+                admUser.isSentMail = true;
 
                 admUser.createdByUserId = admUser.id;
 
@@ -110,7 +110,7 @@ class DefaultService {
 
             return Result.returnSuccess();
         } catch(e) {
-            return Result.returnError(e.message);
+            return Result.returnError((e as Error).message);
         }
     }
 }

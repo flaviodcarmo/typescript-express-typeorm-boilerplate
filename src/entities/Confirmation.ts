@@ -7,13 +7,13 @@ class Confirmation extends BaseProperty {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column()
+    @Column({ type: "varchar" })
     userId: string;
 
-    @Column()
+    @Column({ type: "varchar" })
     code: string;
 
-    @Column()
+    @Column({ type: "varchar" })
     typeId: string;
 }
 
