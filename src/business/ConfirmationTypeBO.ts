@@ -42,7 +42,6 @@ class ConfirmationTypeBO {
 
             if (confirmationType.id === undefined) {
                 confirmationType.id = await this.appUtil.getNewId();
-                confirmationType.createdDate = new Date();
                 confirmationType.createdByUserId = this.currentUser.id;
             } else {
                 confirmationType.updatedByUserId = this.currentUser.id;

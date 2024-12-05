@@ -41,7 +41,6 @@ class ProfileBO {
 
             if (profile.id === undefined) {
                 profile.id = await this.appUtil.getNewId();
-                profile.createdDate = new Date();
                 profile.createdByUserId = this.currentUser.id;
             } else {
                 profile.updatedByUserId = this.currentUser.id;

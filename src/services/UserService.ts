@@ -44,7 +44,6 @@ class UserService {
                 confirmation.code               = await this.appUtil.generateConfirmationCode();
                 confirmation.typeId             = constants.confirmationType.USER_REGISTRATION_SIGN_IN_ID;
                 confirmation.createdByUserId    = this.currentUser.id;
-                confirmation.createdDate        = new Date();
                 
                 confirmation = await confirmation.save();
 

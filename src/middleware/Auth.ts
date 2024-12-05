@@ -50,7 +50,7 @@ export const auth =
             
             next();
         } catch (e) {
-            res.status(401).json([(e as Error).message]);
+            res.status(401).json();
         }
     },
 
@@ -96,7 +96,7 @@ export const auth =
             
             next();
         } catch (e) {
-            res.status(401).json([(e as Error).message]);
+            res.status(401).json();
         }
     },
 }
