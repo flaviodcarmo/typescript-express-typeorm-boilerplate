@@ -63,6 +63,24 @@ describe('getAll', () => {
         expect(Array.isArray(response.body)).toBe(true);
     });
 
+    it('should list confirmations types for admin by id', async() => {
+        const response = await request(app).get('/api/1/confirmation-types?id=' + confirmationType.id).set('Authorization', 'Bearer ' + tokenAdministrator);
+        expect(response.statusCode).toBe(200);
+        expect(Array.isArray(response.body)).toBe(true);
+        expect(response.body.length).toBe(1);
+        expect(response.body[0]?.id).toBe(confirmationType.id);
+        expect(response.body[0]?.name).toBe(confirmationType.name);
+    });
+
+    it('should list confirmations types for admin by name', async() => {
+        const response = await request(app).get('/api/1/confirmation-types?name=' + confirmationType.name).set('Authorization', 'Bearer ' + tokenAdministrator);
+        expect(response.statusCode).toBe(200);
+        expect(Array.isArray(response.body)).toBe(true);
+        expect(response.body.length).toBe(1);
+        expect(response.body[0]?.id).toBe(confirmationType.id);
+        expect(response.body[0]?.name).toBe(confirmationType.name);
+    });
+
     it('should not list confirmations types for user', async() => {
         const response = await request(app).get('/api/1/confirmation-types').set('Authorization', 'Bearer ' + tokenUser);
         expect(response.statusCode).toBe(405);
