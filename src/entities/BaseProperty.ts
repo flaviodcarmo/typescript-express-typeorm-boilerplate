@@ -2,19 +2,19 @@ import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm"
 import "reflect-metadata"
 
 class BaseProperty extends BaseEntity {
-    @Column({ select: false })
+    @Column()
     createdByUserId: string;
 
-    @Column({ select: false, default: null })
+    @Column({ default: null })
     updatedByUserId: string;
 
     @Column({ select: false, default: null })
     deletedByUserId: string;
 
-    @Column({ type: "datetime", select: false, default: () => 'CURRENT_TIMESTAMP' })
-    createdDate: Date;
+    @Column({ type: "datetime", default: () => 'CURRENT_TIMESTAMP' })
+    createdDate: Date = new Date;
 
-    @Column({ type: "datetime", select: false, default: null })
+    @Column({ type: "datetime", default: null })
     updatedDate: Date;
 
     @Column({ type: "datetime", select: false, default: null })

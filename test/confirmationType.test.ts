@@ -48,7 +48,6 @@ describe('getAll', () => {
         confirmationType.id = '123';
         confirmationType.name = "getAllConfirmationTypeTest";
         confirmationType.createdByUserId = administratorUserId;
-        confirmationType.createdDate = new Date();
 
         confirmationType = await confirmationType.save();
     });
@@ -61,6 +60,24 @@ describe('getAll', () => {
         const response = await request(app).get('/api/1/confirmation-types').set('Authorization', 'Bearer ' + tokenAdministrator);
         expect(response.statusCode).toBe(200);
         expect(Array.isArray(response.body)).toBe(true);
+    });
+
+    it('should list confirmations types for admin by id', async() => {
+        const response = await request(app).get('/api/1/confirmation-types?id=' + confirmationType.id).set('Authorization', 'Bearer ' + tokenAdministrator);
+        expect(response.statusCode).toBe(200);
+        expect(Array.isArray(response.body)).toBe(true);
+        expect(response.body.length).toBe(1);
+        expect(response.body[0]?.id).toBe(confirmationType.id);
+        expect(response.body[0]?.name).toBe(confirmationType.name);
+    });
+
+    it('should list confirmations types for admin by name', async() => {
+        const response = await request(app).get('/api/1/confirmation-types?name=' + confirmationType.name).set('Authorization', 'Bearer ' + tokenAdministrator);
+        expect(response.statusCode).toBe(200);
+        expect(Array.isArray(response.body)).toBe(true);
+        expect(response.body.length).toBe(1);
+        expect(response.body[0]?.id).toBe(confirmationType.id);
+        expect(response.body[0]?.name).toBe(confirmationType.name);
     });
 
     it('should not list confirmations types for user', async() => {
@@ -91,7 +108,6 @@ describe('getById', () => {
         confirmationType.id = '123';
         confirmationType.name = "test";
         confirmationType.createdByUserId = administratorUserId;
-        confirmationType.createdDate = new Date();
 
         confirmationType = await confirmationType.save();
     });
@@ -106,6 +122,11 @@ describe('getById', () => {
         expect(response.body).toBeTruthy();
     });
 
+    it('should not return confirmation type by id not exists', async() => {
+        const response = await request(app).get('/api/1/confirmation-types/' + 'abc').set('Authorization', 'Bearer ' + tokenAdministrator);
+        expect(response.statusCode).toBe(404);
+    });
+
     it('should not return confirmation type by id for user', async() => {
         const response = await request(app).get('/api/1/confirmation-types/' + confirmationType.id).set('Authorization', 'Bearer ' + tokenUser);
         expect(response.statusCode).toBe(405);
@@ -117,7 +138,7 @@ describe('insert', () => {
     let confirmationType : ConfirmationType = new ConfirmationType();
 
     afterEach(async() => {
-        if(confirmationType?.id !== undefined){
+        if (confirmationType?.id !== undefined) {
             confirmationType = await confirmationType.remove();
         }
     });
@@ -179,14 +200,12 @@ describe('update', () => {
         confirmationType.id = '123';
         confirmationType.name = "test";
         confirmationType.createdByUserId = administratorUserId;
-        confirmationType.createdDate = new Date();
 
         confirmationType = await confirmationType.save();
 
         confirmationTypev2.id = '1234';
         confirmationTypev2.name = "test2";
         confirmationTypev2.createdByUserId = administratorUserId;
-        confirmationTypev2.createdDate = new Date();
 
         confirmationTypev2 = await confirmationTypev2.save();
     });
@@ -255,7 +274,6 @@ describe('delete', () => {
         confirmationType.id = '123';
         confirmationType.name = "test";
         confirmationType.createdByUserId = administratorUserId;
-        confirmationType.createdDate = new Date();
 
         confirmationType = await confirmationType.save();
     });

@@ -28,7 +28,7 @@ class ApiRequestHistory extends BaseEntity {
     body: string | null;
 
     @Column({ type: "datetime", select: false })
-    createdDate: Date;
+    createdDate: Date = new Date();
 }
 
 export default ApiRequestHistory;
