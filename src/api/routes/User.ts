@@ -1,27 +1,16 @@
-import { Request, Response, Router } from 'express';
+import { Router } from 'express';
 import UserController from "../controllers/UserController";
 import { auth } from '../../middleware/Auth';
+import BaseRouter from "./BaseRouter";
+import { HttpMethod } from '../../util/HttpMethodUtil';
 
 const router : Router = Router();
+const baseRouter : BaseRouter = new BaseRouter(router);
 
-router.get('/api/1/users', auth.requireLogin, async (req: Request, res: Response) => {
-    return await new UserController(req, res).getByParameters();
-});
-
-router.get('/api/1/users/:id', auth.requireLogin, async (req: Request, res: Response) => {
-    return await new UserController(req, res).getById();
-});
-
-router.post('/api/1/users', async (req: Request, res: Response) => {
-    return await new UserController(req, res).signup();
-});
-
-router.post('/api/1/users/:id/confirm', async (req: Request, res: Response) => {
-    return await new UserController(req, res).confirm();
-});
-
-router.post('/api/1/users/auth', async (req: Request, res: Response) => {
-    return await new UserController(req, res).auth();
-});
+baseRouter.request(HttpMethod.GET, '/api/1/users', [auth.requireLogin], UserController, 'getByParameters');
+baseRouter.request(HttpMethod.GET, '/api/1/users/:id', [auth.requireLogin], UserController, 'getById');
+baseRouter.request(HttpMethod.POST, '/api/1/users', [], UserController, 'signup');
+baseRouter.request(HttpMethod.POST, '/api/1/users/:id/confirm', [], UserController, 'confirm');
+baseRouter.request(HttpMethod.POST, '/api/1/users/auth', [], UserController, 'auth');
 
 export default router;

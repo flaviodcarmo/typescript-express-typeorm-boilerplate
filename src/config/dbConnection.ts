@@ -10,6 +10,7 @@ import ConfirmationType from "../entities/ConfirmationType";
 import Password from "../entities/Password";
 import Profile from "../entities/Profile";
 import User from "../entities/User";
+import Task from "../entities/Task";
 
 export const dbConnection = new DataSource({
     type: settings.DATABASE.TYPE,
@@ -25,6 +26,7 @@ export const dbConnection = new DataSource({
         Password,
         Profile,
         User,
+        Task,
     ],
     logging: false,
     synchronize: true

@@ -9,6 +9,7 @@ import { constants } from "../util/Constants";
 import Result from "../util/Result";
 import AppUtil from "../util/AppUtil";
 import MailUtil from "../util/MailUtil";
+import { httpRequestUtil } from "../util/HttpRequestUtil";
 import moment from "moment";
 
 class DefaultService {

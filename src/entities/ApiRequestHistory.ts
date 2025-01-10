@@ -27,6 +27,12 @@ class ApiRequestHistory extends BaseEntity {
     @Column({ type: "varchar", nullable: true })
     body: string | null;
 
+    @Column({ type: "varchar", nullable: true })
+    json: string | null;
+
+    @Column({ type: "varchar", nullable: true })
+    httpCode: number | null;
+
     @Column({ type: "datetime", select: false })
     createdDate: Date = new Date();
 }

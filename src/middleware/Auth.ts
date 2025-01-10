@@ -6,19 +6,20 @@ import { constants } from "../util/Constants";
 import UserBO from "../business/UserBO";
 import User from "../entities/User";
 
-type CustomRequest = Request & {
+type CustomRequest = Request &
+{
     currentUser?: { userId: string; profileId: string };
 };
 
 export const auth = 
 {
-    requireLogin: async (req: Request, res: Response, next: NextFunction) => {
+    requireLogin: async (req: Request, res: Response, next: NextFunction) : Promise<void> => {
         try {
             let user : any;
             let userBO : UserBO = new UserBO(new User());
 
             const token : string | undefined = req.header('Authorization')?.replace('Bearer ', '');
-            if(typeof token !== "string" || token.trim() === ""){
+            if (typeof token !== "string" || token.trim() === ""){
                 throw new Error('Você não está logado.');
             }
     
@@ -54,7 +55,7 @@ export const auth =
         }
     },
 
-    requireAdministrator: async (req: Request, res: Response, next: NextFunction) => {
+    requireAdministrator: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             let user : any;
             let userBO : UserBO = new UserBO(new User());
@@ -83,7 +84,7 @@ export const auth =
                 decoded.profileId !== ''
             ) {
                 user = (await userBO.searchAll({ id: decoded.userId, profileId: decoded.profileId }))[0];
-                if(user === undefined) {
+                if (user === undefined) {
                     throw new Error('Erro ao buscar o usuário.');
                 }
             } else {
@@ -91,7 +92,7 @@ export const auth =
             }
 
             if (customReq.currentUser.profileId !== constants.profile.ADMINISTRATOR_ID) {
-                return res.status(405).json(['Você não tem permissão para acessar essa rota.']);
+                res.status(405).json(['Você não tem permissão para acessar essa rota.']);
             }
             
             next();
