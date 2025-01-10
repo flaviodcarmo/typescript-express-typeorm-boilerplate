@@ -93,6 +93,7 @@ export const auth =
 
             if (customReq.currentUser.profileId !== constants.profile.ADMINISTRATOR_ID) {
                 res.status(405).json(['Você não tem permissão para acessar essa rota.']);
+                return;
             }
             
             next();
