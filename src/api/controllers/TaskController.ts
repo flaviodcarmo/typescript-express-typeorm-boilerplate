@@ -8,7 +8,6 @@ import Filter from "../../util/Filter";
 import BaseController from "./BaseController";
 
 class TaskController extends BaseController<TaskBO> {
-    private currentUser : User;
     private dao : TaskDAO;
     
     constructor(req : Request, res : Response) {
@@ -56,6 +55,28 @@ class TaskController extends BaseController<TaskBO> {
         } catch(e) {
             console.error(e);
             return this.res.status(500).json(['Ocorreu um erro ao buscar as tarefas.']);
+        }
+    }
+
+    async save() : Promise<Response> {
+        try {
+            let r : Result = new Result();
+            let task : Task = new Task();
+
+            task.id = this.req?.params?.id;
+            task.name = this.req.body.name;
+            task.refDate = this.req.body.refDate;
+
+            r = await this.bo.save(task);
+            if (r.isError) {
+                return this.res.status(r.httpCode).json(r.returnObject);
+            }
+            task = r.returnObject as Task;
+                        
+            return this.res.status(200).json(task);
+        } catch(e) {
+            console.error(e);
+            return this.res.status(500).json(['Ocorreu um erro ao salvar a tarefa.']);
         }
     }
 }

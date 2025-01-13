@@ -8,7 +8,6 @@ import Result from "../../util/Result";
 import Filter from "../../util/Filter";
 
 class ProfileController extends BaseController<ProfileBO> {
-    private currentUser : User;
     private dao : ProfileDAO;
     
     constructor(req: Request, res: Response) {

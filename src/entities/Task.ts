@@ -7,11 +7,14 @@ class Task extends BaseProperty {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column({ type: "varchar" })
+    @Column({ type: "varchar", nullable: false })
+    userId: string;
+
+    @Column({ type: "varchar", nullable: false })
     name: string;
 
-    @Column({ type: "varchar" })
-    userId: string;
+    @Column({ type: "date", nullable: false })
+    refDate: string;
 }
 
 export default Task;

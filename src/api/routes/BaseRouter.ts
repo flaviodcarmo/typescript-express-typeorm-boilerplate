@@ -30,7 +30,7 @@ class BaseRouter {
                     r = await middleware(req, res, next);
                     if (r.isError === true) {
                         res.status(r.httpCode).json(r.errors);
-                        throw new Error(r.message);
+                        throw new Error(r.errorMessage as string);
                     }
                 }
                 
@@ -38,7 +38,7 @@ class BaseRouter {
 
                 res = await controllerInstance[method]();
             } catch (error) {
-                next(error);
+                next();
             } finally {
                 try {
                     customResponse = Object.assign(Response, res);
