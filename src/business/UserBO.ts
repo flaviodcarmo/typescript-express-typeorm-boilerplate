@@ -34,7 +34,7 @@ class UserBO {
 
     async getByParameters(filters: Filter = {}) : Promise<Array<User>> {
         if (this.currentUser.profileId !== constants.profile.ADMINISTRATOR_ID) {
-            filters.id = this.currentUser.id;
+            filters.createdByUserId = this.currentUser.id;
         }
 
         return await this.dao.getByParameters(filters);

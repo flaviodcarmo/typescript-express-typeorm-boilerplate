@@ -44,8 +44,12 @@ class UserDAO {
     async getByParameters(filters: Filter = {}) : Promise<Array<User>> {
         filters.where = {};
 
-        if (typeof filters.id === "string" ) {
+        if (typeof filters.id === "string") {
             filters.where.id = filters.id;
+        }
+
+        if (typeof filters.createdByUserId === "string") {
+            filters.where.createdByUserId = filters.createdByUserId;
         }
 
         if (typeof filters.name === "string") {

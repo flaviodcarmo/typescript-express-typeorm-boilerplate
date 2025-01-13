@@ -66,10 +66,11 @@ class TaskController extends BaseController<TaskBO> {
             task.id = this.req?.params?.id;
             task.name = this.req.body.name;
             task.refDate = this.req.body.refDate;
+            task.userId = this.req.body.userId;
 
             r = await this.bo.save(task);
             if (r.isError) {
-                return this.res.status(r.httpCode).json(r.returnObject);
+                return this.res.status(r.httpCode).json(r.errors);
             }
             task = r.returnObject as Task;
                         

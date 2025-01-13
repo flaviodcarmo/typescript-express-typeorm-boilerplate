@@ -32,6 +32,10 @@ class TaskDAO {
             filters.where.id = filters.id;
         }
 
+        if (typeof filters.createdByUserId === "string") {
+            filters.where.createdByUserId = filters.createdByUserId;
+        }
+
         if (typeof filters.name === "string") {
             filters.where.name = filters.name;
         }

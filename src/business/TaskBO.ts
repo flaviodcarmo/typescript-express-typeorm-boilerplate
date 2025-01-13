@@ -5,6 +5,7 @@ import { constants } from "../util/Constants";
 import Filter from "../util/Filter";
 import Result from "../util/Result";
 import AppUtil from "../util/AppUtil";
+import UserBO from "../business/UserBO";
 
 class TaskBO {
     private currentUser : User;
@@ -34,13 +35,20 @@ class TaskBO {
             let r : Result;
 
             r = await this.validateSave(task);
-            if (r.isError){
+            if (r.isError) {
                 return r;
             }
+            task = r.returnObject as Task;
 
-            task.createdByUserId = this.currentUser.id;
-            task.userId = this.currentUser.id;
-            task.id = await this.appUtil.getNewId();
+            if (task.id === undefined) {
+                task.createdByUserId = this.currentUser.id;
+                task.createdDate = new Date();
+
+                task.id = await this.appUtil.getNewId();
+            } else {
+                task.updatedByUserId = this.currentUser.id;
+                task.updatedDate = new Date();
+            }
 
             task = await Task.save(task);
 
@@ -52,8 +60,51 @@ class TaskBO {
 
     async validateSave(task : Task) : Promise<Result> {
         try {
+            let errors : Array<string> = [];
+            let currentTask : Task | undefined = undefined;
+            let userTask : User | undefined = undefined;
 
-            return Result.success;
+            let userBO : UserBO = new UserBO(this.currentUser);
+
+            if (task.id !== undefined) {
+                currentTask = (await this.getByParameters({ id: task.id }))[0];
+                if (currentTask === undefined) {
+                    return Result.returnError('A tarefa não foi encontrada.', 404);
+                }
+            }
+
+            if (typeof task.userId === "string" && task.userId.trim() !== "") {
+                userTask = (await userBO.getByParameters({ id: task.userId }))[0];
+                if (userTask === undefined) {
+                    return Result.returnError('O usuário não foi encontrado.', 404);
+                }
+            } else {
+                task.userId = this.currentUser.id;
+            }
+
+            if (typeof task.name !== "string" || task.name.trim() === "") {
+                errors.push('O nome é de preenchimento obrigatório!');
+            }
+
+            if (typeof task.refDate !== "string" || task.refDate.trim() === "") {
+                errors.push('A data é de preenchimento obrigatório!');
+            } else if (this.appUtil.validateDate(task.refDate) === false) {
+                errors.push('A data informada é inválida!');
+            }
+            
+            if (errors.length > 0) {
+                return Result.returnErrors(errors);
+            }
+
+            if (currentTask !== undefined) {
+                currentTask.name = task.name;
+                currentTask.refDate = task.refDate;
+                currentTask.userId = task.userId;
+
+                task = currentTask;
+            }
+
+            return Result.returnSuccess(task);
         } catch(e) {
             return Result.error;
         }

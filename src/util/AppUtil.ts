@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import moment from 'moment';
 
 class AppUtil {
 
@@ -17,6 +18,14 @@ class AppUtil {
     async sleep(milliseconds : number) {
         const sleep = require('util').promisify(setTimeout)
         return sleep(milliseconds);
+    }
+
+    validateDate(refDate: string, format: string = 'YYYY-MM-DD') : boolean {
+        if (moment(refDate, format, true).isValid() === false) {
+            return false;
+        }
+
+        return true;
     }
 }
 
