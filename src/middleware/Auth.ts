@@ -18,13 +18,18 @@ export const auth =
         try {
             let user : any;
             let userBO : UserBO = new UserBO(new User());
+            let decoded : any;
 
             const token : string | undefined = req.header('Authorization')?.replace('Bearer ', '');
             if (typeof token !== "string" || token.trim() === ""){
                 throw new Error('Você não está logado.');
             }
     
-            const decoded : any = jwt.verify(token, settings.SECRET_KEY);
+            try {
+                decoded = jwt.verify(token, settings.SECRET_KEY);
+            } catch (e) {
+                throw new Error('Você não está logado.');
+            }
 
             const customReq = req as CustomRequest;
             customReq.currentUser = { 
@@ -60,13 +65,18 @@ export const auth =
         try {
             let user : any;
             let userBO : UserBO = new UserBO(new User());
+            let decoded : any;
 
             const token : string | undefined = req.header('Authorization')?.replace('Bearer ', '');
-            if(typeof token !== "string" || token.trim() === ""){
+            if (typeof token !== "string" || token.trim() === ""){
                 throw new Error();
             }
     
-            const decoded : any = jwt.verify(token, settings.SECRET_KEY);
+            try {
+                decoded = jwt.verify(token, settings.SECRET_KEY);
+            } catch (e) {
+                throw new Error('Você não está logado.');
+            }
 
             const customReq = req as CustomRequest;
             customReq.currentUser = { 
