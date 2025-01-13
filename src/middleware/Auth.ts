@@ -2,6 +2,7 @@ import jwt, { Secret, JwtPayload } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import { settings } from "../config/settings";
 import { constants } from "../util/Constants";
+import Result from "../util/Result";
 
 import UserBO from "../business/UserBO";
 import User from "../entities/User";
@@ -13,7 +14,7 @@ type CustomRequest = Request &
 
 export const auth = 
 {
-    requireLogin: async (req: Request, res: Response, next: NextFunction) : Promise<void> => {
+    requireLogin: async (req: Request, res: Response, next: NextFunction) : Promise<Result> => {
         try {
             let user : any;
             let userBO : UserBO = new UserBO(new User());
@@ -49,13 +50,13 @@ export const auth =
                 throw new Error('Erro ao buscar o usuário.');
             }
             
-            next();
+            return Result.success;
         } catch (e) {
-            res.status(401).json();
+            return Result.returnError((e as Error).message, 401);
         }
     },
 
-    requireAdministrator: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    requireAdministrator: async (req: Request, res: Response, next: NextFunction): Promise<Result> => {
         try {
             let user : any;
             let userBO : UserBO = new UserBO(new User());
@@ -92,13 +93,12 @@ export const auth =
             }
 
             if (customReq.currentUser.profileId !== constants.profile.ADMINISTRATOR_ID) {
-                res.status(405).json(['Você não tem permissão para acessar essa rota.']);
-                return;
+                return Result.returnError('Você não tem permissão para acessar essa rota.', 405);
             }
             
-            next();
+            return Result.success;
         } catch (e) {
-            res.status(401).json();
+            return Result.returnError((e as Error).message, 401);
         }
     },
 }
