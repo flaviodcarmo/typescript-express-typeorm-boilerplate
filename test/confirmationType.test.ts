@@ -35,9 +35,9 @@ beforeAll(async() => {
 
 afterAll(async() => {
     //trava de tempo para ter o tempo de gerar histórico de requisição
-    await new AppUtil().sleep(100);
+    //await new AppUtil().sleep(100);
 
-    await connection.close();
+    //await connection.close();
     await server.close();
 });
 

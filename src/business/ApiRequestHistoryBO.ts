@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { Lock } from "async-await-mutex-lock";
 import AppUtil from "../util/AppUtil";
 import ApiRequestHistory from "../entities/ApiRequestHistory";
+import { lockManager } from "../util/LockManager";
 
 class ApiRequestHistoryBO {
     private appUtil : AppUtil;
@@ -11,9 +11,7 @@ class ApiRequestHistoryBO {
     }
 
     async generateApiHistory(req : Request, res : Response) {
-        let lock = new Lock<string>();
-
-        await lock.acquire("ApiRequestHistoryBO.generateApiHistory");
+        const release = await lockManager.acquire("ApiRequestHistoryBO.generateApiHistory");
 
         try {
             let aph : ApiRequestHistory = new ApiRequestHistory();
@@ -88,7 +86,7 @@ class ApiRequestHistoryBO {
         } catch(e) {
             console.error((e as Error).message);
         } finally {
-            lock.release("ApiRequestHistoryBO.generateApiHistory");
+            release();
         }
     }
 }
