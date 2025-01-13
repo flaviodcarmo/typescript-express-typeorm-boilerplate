@@ -2,7 +2,6 @@ import Result from "../util/Result";
 import User from "../entities/User";
 import Confirmation from "../entities/Confirmation";
 import UserDAO from "../daos/UserDAO";
-import moment from 'moment';
 import bcrypt from 'bcrypt';
 import Password from "../entities/Password";
 import PasswordBO from "./PasswordBO";
@@ -104,7 +103,7 @@ class UserBO {
 
             if (typeof entity?.birthDay !== "string" || entity?.birthDay.trim() === "") {
                 errors.push('A data de nascimento é de preenchimento obrigatório!');
-            } else if (moment(entity.birthDay, 'YYYY-MM-DD', true).isValid() === false) {
+            } else if (this.appUtil.validateDate(entity.birthDay) === false) {
                 errors.push('A data de nascimento é inválida!');
             }
 
