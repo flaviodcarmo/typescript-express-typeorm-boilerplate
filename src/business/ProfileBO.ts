@@ -22,7 +22,7 @@ class ProfileBO {
     }
 
     async getByParameters(filters: Filter = {}) : Promise<Array<Profile>> {
-        if(this.currentUser.profileId !== constants.profile.ADMINISTRATOR_ID){
+        if (this.currentUser.profileId !== constants.profile.ADMINISTRATOR_ID){
             filters.createdByUserId = this.currentUser.id;
         }
 
