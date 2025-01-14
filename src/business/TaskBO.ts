@@ -24,7 +24,7 @@ class TaskBO {
 
     async getByParameters(filters: Filter = {}) : Promise<Array<Task>> {
         if (this.currentUser.profileId !== constants.profile.ADMINISTRATOR_ID) {
-            filters.createdByUserId = this.currentUser.id;
+            filters.userId = this.currentUser.id;
         }
 
         return await this.dao.getByParameters(filters);
