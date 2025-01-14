@@ -1,9 +1,12 @@
+import User from "../entities/User";
 import Task from "../entities/Task";
 import Filter from "../util/Filter";
 
 class TaskDAO {
-    constructor() {
-        
+    private currentUser : User;
+
+    constructor(currentUser : User){
+        this.currentUser = currentUser;
     }
 
     async searchAll(filters: Filter = {}) : Promise<Array<Task>> {
@@ -15,6 +18,10 @@ class TaskDAO {
 
         if (typeof filters.name === "string") {
             filters.where.name = filters.name;
+        }
+
+        if (typeof filters.userId === "string") {
+            filters.where.userId = filters.userId;
         }
 
         if (typeof filters.createdByUserId === "string") {
@@ -31,13 +38,13 @@ class TaskDAO {
         if (typeof filters.id === "string") {
             filters.where.id = filters.id;
         }
-
-        if (typeof filters.createdByUserId === "string") {
-            filters.where.createdByUserId = filters.createdByUserId;
-        }
-
+        
         if (typeof filters.name === "string") {
             filters.where.name = filters.name;
+        }
+
+        if (typeof filters.userId === "string") {
+            filters.where.userId = filters.userId;
         }
 
         if (typeof filters.createdByUserId === "string") {

@@ -14,7 +14,7 @@ class TaskBO {
     
     constructor(currentUser : User) {
         this.currentUser = currentUser;
-        this.dao = new TaskDAO();
+        this.dao = new TaskDAO(currentUser);
         this.appUtil = new AppUtil();
     }
 
