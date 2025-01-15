@@ -11,6 +11,7 @@ import Password from "../entities/Password";
 import Profile from "../entities/Profile";
 import User from "../entities/User";
 import Task from "../entities/Task";
+import Dollar from "../entities/Dollar";
 
 export const dbConnection = new DataSource({
     type: settings.DATABASE.TYPE,
@@ -27,6 +28,7 @@ export const dbConnection = new DataSource({
         Profile,
         User,
         Task,
+        Dollar
     ],
     logging: false,
     synchronize: true

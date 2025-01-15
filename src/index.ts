@@ -4,6 +4,8 @@ import { settings }  from './config/settings';
 
 import UserService from "./services/UserService";
 import DefaultService from "./services/DefaultService";
+import DollarService from "./services/DollarService";
+
 import Result from "./util/Result";
 
 async function initialize() {
@@ -23,6 +25,11 @@ async function initialize() {
         }, 20000);
 
         new DefaultService().createDefaultData();
+
+        setInterval(async function() {
+            new DollarService().saveDollarExchangeRate();
+        }, 60000);
+        
     } catch (error) {
         console.error(error)
     }

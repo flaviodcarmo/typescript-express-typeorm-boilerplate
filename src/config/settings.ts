@@ -34,5 +34,8 @@ export const settings : any =
                 PASSWORD: process.env["TEST_USER_USER_PASSWORD"]
             }
         }
+    },
+    API_DOLLAR: {
+        URL: process.env['URL_API_DOLLAR_RATE']
     }
 };
