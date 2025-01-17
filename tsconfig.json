@@ -2,7 +2,7 @@
   "compilerOptions": {
     "skipLibCheck": true,
     "target": "ESNext",
-    "module": "CommonJS",
+    "module": "ESNext",
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
