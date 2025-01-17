@@ -10,8 +10,8 @@ export const settings : any =
         TYPE: process.env["TYPE"],
         HOST: process.env["HOST"],
         PORT: process.env["DATABASE_PORT"],
-        USERNAME: process.env["USERNAME"],
-        PASSWORD: process.env["PASSWORD"],
+        USERNAME: process.env["DATABASE_USERNAME"],
+        PASSWORD: process.env["DATABASE_PASSWORD"],
         NAME: process.env["DATABASE_NAME"]
     },
     MAIL: {

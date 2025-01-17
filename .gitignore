@@ -108,3 +108,5 @@ docker-compose.yml
 
 # database sqlite
 database.sqlite
+
+docker
