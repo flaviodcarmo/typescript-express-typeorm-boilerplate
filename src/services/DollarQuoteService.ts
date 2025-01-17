@@ -32,7 +32,7 @@ class DollarQuoteService {
     }
 
     const responseObj = response.returnObject;
-    const { code, codein, name, high, low, varBid, pctChange, bid, ask, createDate} = responseObj["USDBRL"];
+    const { code, codein, name, high, low, varBid, pctChange, bid, ask, create_date} = responseObj["USDBRL"];
     let newDollarQuote = new DollarQuote();
 
     newDollarQuote.code = code;
@@ -44,7 +44,9 @@ class DollarQuoteService {
     newDollarQuote.pctChange = pctChange;
     newDollarQuote.bid = bid;
     newDollarQuote.ask = ask;
-    newDollarQuote.createDate = createDate;
+    newDollarQuote.createDate = create_date;
+    newDollarQuote.createdByUserId = this.currentUser.id;
+    newDollarQuote.isEnabled = true;
 
     await newDollarQuote.save();
 
