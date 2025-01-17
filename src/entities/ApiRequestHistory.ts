@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm"
 import "reflect-metadata"
 
-@Entity('apiRequestHistory')
+@Entity('apirequesthistory')
 class ApiRequestHistory extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
     id: string;
