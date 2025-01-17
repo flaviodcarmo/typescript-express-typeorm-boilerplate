@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import BaseProperty from "./BaseProperty";
 
-@Entity('dollar')
+@Entity('dollarQuote')
 class DollarQuote extends BaseProperty {
   @PrimaryGeneratedColumn("uuid")
   id: string;
