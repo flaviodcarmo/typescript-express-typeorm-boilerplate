@@ -5,6 +5,7 @@ import { settings }  from './config/settings';
 import UserService from "./services/UserService";
 import DefaultService from "./services/DefaultService";
 import Result from "./util/Result";
+import DollarQuoteService from "./services/DollarQuoteService";
 
 async function initialize() {
     let r : Result = new Result();
@@ -28,4 +29,29 @@ async function initialize() {
     }
 }
 
+async function getDollarQuoteInitialize() {
+    let r : Result = new Result();
+
+    try {
+        await dbConnection.initialize();
+
+        console.log("Get dollar quote has been initialized!");
+
+        app.listen(settings.PORT, async () => {
+            console.log(`⚡️[server]: Server is running at https://localhost:${settings.PORT}`);
+        });
+
+        setInterval(async function() {
+           const res = await new DollarQuoteService().getDollarQuote();
+           console.log(res)
+        }, 60000);
+        
+        
+        new DefaultService().createDefaultData();
+    } catch(error) {
+        console.error(error)
+    }
+}
+
 initialize();
+getDollarQuoteInitialize();

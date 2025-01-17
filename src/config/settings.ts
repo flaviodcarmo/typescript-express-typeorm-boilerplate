@@ -6,6 +6,7 @@ export const settings : any =
 {
     PORT: process.env["PORT"],
     SECRET_KEY: process.env["SECRET_KEY"],
+    URL_API_DOLLAR_QUOTE: process.env["URL_API_DOLLAR_QUOTE"],
     DATABASE: {
         TYPE: process.env["TYPE"],
         HOST: process.env["HOST"],
