@@ -1,51 +1,53 @@
-version: '3.9'
-
+version: '3.8'
 services:
-  database:
-    container_name: typescript-database
-    image: mysql:8
-    command: --default-authentication-plugin=mysql_native_password
+  db:
+    image: mysql:8.0
     restart: always
-    ports:
-      - 3312:3306
-    volumes:
-      - ~/apps/mysql/typescript-express-typeorm-jest-boilerplate:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=@rootPassword
-      - MYSQL_DATABASE=@databaseName
-      - MYSQL_USER=@user
-      - MYSQL_PASSWORD=@password
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_DATABASE=
+    expose:
+      - "3307"
+    ports:
+      - '3307:3306'
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - app-tier
   app:
     depends_on:
-      - database
+      - db
     build:
       context: .
       dockerfile: Dockerfile
     container_name: typescript-web-api
     image: typescript-web-api
     restart: always
+    networks:
+      - app-tier
     ports:
       - 3456:3456
     environment:
       - PORT=3456
       - SECRET_KEY=@SECRET_KEY
-
       - TYPE=mysql
-      - HOST=@HOST
-      - DATABASE_PORT=@DATABASE_PORT
-      - USERNAME=@user
-      - PASSWORD=@password
-      - DATABASE=@databaseName
-
+      - HOST=db
+      - DATABASE_PORT=3306
+      - DATABASE_USERNAME=
+      - DATABASE_PASSWORD=
+      - DATABASE_NAME=
       - DEFAULT_ADMINSTRATOR_USER_ID=@DEFAULT_ADMINSTRATOR_USER_ID
       - DEFAULT_ADMINSTRATOR_USER_NAME=@DEFAULT_ADMINSTRATOR_USER_NAME
       - DEFAULT_ADMINSTRATOR_USER_EMAIL=@DEFAULT_ADMINSTRATOR_USER_EMAIL
-
       - DEFAULT_ADMINSTRATOR_PROFILE_ID=@DEFAULT_ADMINSTRATOR_PROFILE_ID
       - DEFAULT_USER_PROFILE_ID=@DEFAULT_USER_PROFILE_ID
       - DEFAULT_USER_PROFILE_NAME=@DEFAULT_USER_PROFILE_NAME
-
       - DEFAULT_CONFIRMATION_TYPE_USER_ID=@DEFAULT_CONFIRMATION_TYPE_USER_ID
       - DEFAULT_CONFIRMATION_TYPE_USER_NAME=@DEFAULT_CONFIRMATION_TYPE_USER_NAME
-    stdin_open: true
-    tty: true
+      - URL_API_DOLLAR_RATE=https://economia.awesomeapi.com.br/json/last
+volumes:
+  db:
+    driver: local
+networks:
+  app-tier:
+    driver: bridge
