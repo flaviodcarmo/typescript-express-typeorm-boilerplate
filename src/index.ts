@@ -24,34 +24,19 @@ async function initialize() {
         }, 20000);
 
         new DefaultService().createDefaultData();
+    
+        setInterval(async function() {
+            try {
+                await new DollarQuoteService().getDollarQuote();
+                // console.log(res); 
+            } catch (error) {
+                console.error('Erro ao obter a cotação do dólar:', error);
+            }
+        }, 60000);
+         
     } catch (error) {
         console.error(error)
     }
 }
 
-async function getDollarQuoteInitialize() {
-    let r : Result = new Result();
-
-    try {
-        await dbConnection.initialize();
-
-        console.log("Get dollar quote has been initialized!");
-
-        app.listen(settings.PORT, async () => {
-            console.log(`⚡️[server]: Server is running at https://localhost:${settings.PORT}`);
-        });
-
-        setInterval(async function() {
-           const res = await new DollarQuoteService().getDollarQuote();
-           console.log(res)
-        }, 60000);
-        
-        
-        new DefaultService().createDefaultData();
-    } catch(error) {
-        console.error(error)
-    }
-}
-
 initialize();
-getDollarQuoteInitialize();
