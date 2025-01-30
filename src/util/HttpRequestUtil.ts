@@ -21,7 +21,7 @@ export const httpRequestUtil =
             const config: AxiosRequestConfig = {
                 headers: headers
             };
-            const response: AxiosResponse = await axios.get(url, config);
+            const response: AxiosResponse = await axios.post(url, body, config);
 
             return Result.returnSuccess(response.data);
         } catch(e) {
