@@ -10,7 +10,7 @@ class ApiRequestHistoryBO {
         this.appUtil = new AppUtil();
     }
 
-    async generateApiHistory(req : Request, res : Response) {
+    async generateApiHistory(req : Request, res : Response) : Promise<void> {
         const release = await lockManager.acquire("ApiRequestHistoryBO.generateApiHistory");
 
         try {
